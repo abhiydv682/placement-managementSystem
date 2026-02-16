@@ -86,9 +86,5 @@ driveRoutes.get(
   getSingleDrive
 );
 
-driveRoutes.get(
-  "/:id",
-  protect,
-  getDriveById
-);
+
 module.exports = driveRoutes;

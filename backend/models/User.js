@@ -59,7 +59,9 @@ const userSchema = new mongoose.Schema(
 
     course: String,
     college: String,
-    year: String,
+    branch: String,
+    cgpa: String,
+    batch: String,
     bio: String,
     website: String,
     linkedIn: String,

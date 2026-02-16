@@ -285,7 +285,7 @@
 //               </div>
 //               <input type="file" accept=".pdf" className="hidden" id="resumeInput" onChange={(e) => handleFileChange(e, "resume")} />
 //               <label htmlFor="resumeInput" className="cursor-pointer text-indigo-600 font-bold hover:underline">Click to Browse</label>
-              
+
 //               {resumePreview && (
 //                 <a href={resumePreview} target="_blank" className="flex items-center gap-2 text-green-600 font-bold bg-green-50 dark:bg-green-900/20 px-4 py-2 rounded-lg mt-2">
 //                   <Eye size={18} /> View Uploaded PDF
@@ -775,6 +775,7 @@ import {
   Download,
   UploadCloud,
   X,
+  Eye,
 } from "lucide-react";
 
 export default function Profile() {
@@ -787,11 +788,11 @@ export default function Profile() {
 
   const [skills, setSkills] = useState([]);
   const [skillInput, setSkillInput] = useState("");
-  
+
   // File States
   const [resume, setResume] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
-  
+
   // Preview States
   const [imagePreview, setImagePreview] = useState(null);
   const [resumeUrl, setResumeUrl] = useState(null);
@@ -822,15 +823,15 @@ export default function Profile() {
 
         // Profile Pic Preview
         if (user.profilePic?.secure_url) {
-          setImagePreview(user.profilePic.secure_url.startsWith("http") 
-            ? user.profilePic.secure_url 
+          setImagePreview(user.profilePic.secure_url.startsWith("http")
+            ? user.profilePic.secure_url
             : BASE_URL + user.profilePic.secure_url);
         }
 
         // Resume Preview/Download Link
         if (user.resume?.secure_url) {
-          setResumeUrl(user.resume.secure_url.startsWith("http") 
-            ? user.resume.secure_url 
+          setResumeUrl(user.resume.secure_url.startsWith("http")
+            ? user.resume.secure_url
             : BASE_URL + user.resume.secure_url);
         }
       } catch (err) {
@@ -871,7 +872,7 @@ export default function Profile() {
     try {
       setLoading(true);
       const formData = new FormData();
-      
+
       // Append Form Fields
       Object.keys(form).forEach(key => formData.append(key, form[key]));
       formData.append("skills", skills.join(","));
@@ -885,10 +886,10 @@ export default function Profile() {
       });
 
       toast.success("Profile Updated 🚀");
-      
+
       // Update local states with new URLs from backend
       if (data.user.resume?.secure_url) setResumeUrl(data.user.resume.secure_url);
-      
+
       setEditMode(false);
     } catch (err) {
       toast.error(err.response?.data?.message || "Save failed");
@@ -922,9 +923,9 @@ export default function Profile() {
                 <h3 className="text-3xl font-bold text-slate-800">{form.name}</h3>
                 <p className="text-indigo-600 font-semibold">{form.course} – {form.branch}</p>
                 <div className="flex gap-4 mt-4 justify-center md:justify-start text-slate-500">
-                  {form.linkedIn && <a href={form.linkedIn} target="_blank"><Linkedin size={20} className="hover:text-blue-600"/></a>}
-                  {form.github && <a href={form.github} target="_blank"><Github size={20} className="hover:text-black"/></a>}
-                  {form.website && <a href={form.website} target="_blank"><Globe size={20} className="hover:text-green-600"/></a>}
+                  {form.linkedIn && <a href={form.linkedIn} target="_blank"><Linkedin size={20} className="hover:text-blue-600" /></a>}
+                  {form.github && <a href={form.github} target="_blank"><Github size={20} className="hover:text-black" /></a>}
+                  {form.website && <a href={form.website} target="_blank"><Globe size={20} className="hover:text-green-600" /></a>}
                 </div>
               </div>
             </div>
@@ -954,9 +955,14 @@ export default function Profile() {
                   <div className="p-3 bg-white rounded-xl shadow-sm text-indigo-600"><FileText /></div>
                   <div><p className="font-bold text-slate-800">Professional Resume</p><p className="text-xs text-slate-500">PDF Document</p></div>
                 </div>
-                <a href={resumeUrl} download target="_blank" className="flex gap-2 items-center bg-white border border-slate-200 px-6 py-2 rounded-xl font-bold text-indigo-600 hover:bg-indigo-50 transition">
-                  <Download size={18} /> Download
-                </a>
+                <div className="flex gap-3">
+                  <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="flex gap-2 items-center bg-indigo-50 border border-indigo-100 px-6 py-2 rounded-xl font-bold text-indigo-600 hover:bg-indigo-100 transition">
+                    <Eye size={18} /> Preview
+                  </a>
+                  <a href={resumeUrl} download target="_blank" className="flex gap-2 items-center bg-white border border-slate-200 px-6 py-2 rounded-xl font-bold text-slate-600 hover:bg-slate-50 transition">
+                    <Download size={18} /> Download
+                  </a>
+                </div>
               </div>
             )}
           </div>
@@ -978,19 +984,19 @@ export default function Profile() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              <Input label="Full Name" name="name" value={form.name} onChange={handleChange}/>
-              <Input label="Phone" name="phone" value={form.phone} onChange={handleChange}/>
-              <Input label="Course" name="course" value={form.course} onChange={handleChange}/>
-              <Input label="Branch" name="branch" value={form.branch} onChange={handleChange}/>
-              <Input label="CGPA" name="cgpa" value={form.cgpa} onChange={handleChange}/>
-              <Input label="Batch" name="batch" value={form.batch} onChange={handleChange}/>
+              <Input label="Full Name" name="name" value={form.name} onChange={handleChange} />
+              <Input label="Phone" name="phone" value={form.phone} onChange={handleChange} />
+              <Input label="Course" name="course" value={form.course} onChange={handleChange} />
+              <Input label="Branch" name="branch" value={form.branch} onChange={handleChange} />
+              <Input label="CGPA" name="cgpa" value={form.cgpa} onChange={handleChange} />
+              <Input label="Batch" name="batch" value={form.batch} onChange={handleChange} />
             </div>
 
             {/* Skills */}
             <div className="space-y-3">
               <label className="font-semibold text-slate-700">Skills</label>
               <div className="flex gap-2">
-                <input value={skillInput} onChange={(e)=>setSkillInput(e.target.value)} className="border p-3 flex-1 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500" placeholder="e.g. React" />
+                <input value={skillInput} onChange={(e) => setSkillInput(e.target.value)} className="border p-3 flex-1 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500" placeholder="e.g. React" />
                 <button type="button" onClick={addSkill} className="bg-indigo-600 text-white px-6 rounded-xl font-bold">Add</button>
               </div>
               <div className="flex gap-2 flex-wrap">
@@ -1013,10 +1019,17 @@ export default function Profile() {
                   <span className="text-xs text-slate-400">PDF format only</span>
                 </label>
               </div>
+              {resumeUrl && (
+                <div className="text-center mt-2">
+                  <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-indigo-600 font-semibold text-sm hover:underline">
+                    <Eye size={16} /> Preview Current Resume
+                  </a>
+                </div>
+              )}
             </div>
 
             <button disabled={loading} className="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold text-lg hover:bg-indigo-700 transition shadow-lg shadow-indigo-100">
-              {loading ? "Updating Profile..." : <><Save className="inline mr-2"/> Save Changes</>}
+              {loading ? "Updating Profile..." : <><Save className="inline mr-2" /> Save Changes</>}
             </button>
           </form>
         )}
@@ -1038,7 +1051,7 @@ function Input({ label, name, value, onChange }) {
 function Info({ icon: Icon, label, value }) {
   return (
     <div className="flex gap-4 items-center bg-slate-50 p-4 rounded-2xl">
-      <div className="p-2 bg-white rounded-lg shadow-sm text-indigo-600"><Icon size={20}/></div>
+      <div className="p-2 bg-white rounded-lg shadow-sm text-indigo-600"><Icon size={20} /></div>
       <div>
         <p className="text-xs text-gray-400 font-bold uppercase">{label}</p>
         <p className="font-bold text-slate-700">{value || "Not Set"}</p>

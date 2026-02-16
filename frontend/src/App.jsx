@@ -23,6 +23,7 @@ import DriveDetail from "./pages/student/DriveDetail";
 import Companies from "./pages/admin/Companies";
 import AdminDrives from "./pages/admin/Drives";       // 🔥 LIST PAGE
 import CreateDrive from "./pages/admin/CreateDrive"; // 🔥 CREATE PAGE
+import EditDrive from "./pages/admin/EditDrive";     // 🔥 EDIT PAGE
 import CompanyDetail from "./pages/admin/CompanyDetail";
 import Applications from "./pages/admin/Applications";
 
@@ -125,6 +126,16 @@ function AppRoutes() {
         element={
           <ProtectedRoute role="admin">
             <CreateDrive />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* 🔥 Edit Drive */}
+      <Route
+        path="/admin/drives/edit/:id"
+        element={
+          <ProtectedRoute role="admin">
+            <EditDrive />
           </ProtectedRoute>
         }
       />

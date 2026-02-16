@@ -1,26 +1,38 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import axiosInstance from "../../services/axiosInstance";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
 import RecruiterBarChart from "./RecruiterBarChart";
+import {
+  ArrowLeft,
+  Mail,
+  Trash,
+  UserPlus,
+  Briefcase,
+  FileText,
+  CheckCircle,
+  XCircle,
+  Building2,
+  X
+} from "lucide-react";
 
 export default function CompanyDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [company, setCompany] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showAddModal, setShowAddModal] =
-    useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [modalLoading, setModalLoading] = useState(false);
 
   const [stats, setStats] = useState({});
-  const [newRecruiter, setNewRecruiter] =
-    useState({
-      name: "",
-      email: "",
-      password: "",
-    });
+  const [newRecruiter, setNewRecruiter] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   /* =========================
      FETCH COMPANY
@@ -28,13 +40,12 @@ export default function CompanyDetail() {
 
   const fetchCompany = async () => {
     try {
-      const { data } =
-        await axiosInstance.get(
-          `/admin/company/${id}`
-        );
+      setLoading(true);
+      const { data } = await axiosInstance.get(`/admin/company/${id}`);
       setCompany(data);
     } catch {
       toast.error("Failed to load company");
+      navigate("/admin/companies");
     } finally {
       setLoading(false);
     }
@@ -42,7 +53,7 @@ export default function CompanyDetail() {
 
   useEffect(() => {
     fetchCompany();
-  }, []);
+  }, [id]);
 
   /* =========================
      FETCH STATS PER RECRUITER
@@ -50,11 +61,7 @@ export default function CompanyDetail() {
 
   const fetchStats = async (recruiterId) => {
     try {
-      const { data } =
-        await axiosInstance.get(
-          `/admin/recruiter-stats/${recruiterId}`
-        );
-
+      const { data } = await axiosInstance.get(`/admin/recruiter-stats/${recruiterId}`);
       setStats((prev) => ({
         ...prev,
         [recruiterId]: data,
@@ -81,38 +88,32 @@ export default function CompanyDetail() {
   const addRecruiter = async (e) => {
     e.preventDefault();
     try {
-      await axiosInstance.post(
-        "/admin/recruiter",
-        {
-          ...newRecruiter,
-          companyId: id,
-        }
-      );
+      setModalLoading(true);
+      await axiosInstance.post("/admin/recruiter", {
+        ...newRecruiter,
+        companyId: id,
+      });
 
       toast.success("Recruiter added 🎉");
       setShowAddModal(false);
-      setNewRecruiter({
-        name: "",
-        email: "",
-        password: "",
-      });
+      setNewRecruiter({ name: "", email: "", password: "" });
       fetchCompany();
     } catch (err) {
-      toast.error(
-        err.response?.data?.message ||
-          "Error adding recruiter"
-      );
+      toast.error(err.response?.data?.message || "Error adding recruiter");
+    } finally {
+      setModalLoading(false);
     }
   };
 
-  const removeRecruiter = async (
-    recruiterId
-  ) => {
-    try {
-      await axiosInstance.delete(
-        `/admin/recruiter/${recruiterId}`
-      );
+  /* =========================
+     REMOVE RECRUITER
+  ========================== */
 
+  const removeRecruiter = async (recruiterId) => {
+    if (!window.confirm("Are you sure you want to remove this recruiter?")) return;
+
+    try {
+      await axiosInstance.delete(`/admin/recruiter/${recruiterId}`);
       toast.success("Recruiter removed");
       fetchCompany();
     } catch {
@@ -120,191 +121,215 @@ export default function CompanyDetail() {
     }
   };
 
-  if (loading)
+  if (loading) {
     return (
       <Layout>
-        <div className="flex justify-center h-60 items-center">
-          <div className="animate-spin h-10 w-10 border-t-4 border-indigo-600 rounded-full"></div>
+        <div className="flex justify-center h-screen items-center">
+          <div className="animate-spin h-12 w-12 border-t-4 border-indigo-600 rounded-full"></div>
         </div>
       </Layout>
     );
+  }
 
   return (
     <Layout>
-      {/* COMPANY HEADER */}
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h2 className="text-3xl font-bold dark:text-white">
-            {company.name}
-          </h2>
-          <p className="text-gray-500">
-            {company.description}
-          </p>
+      <div className="max-w-7xl mx-auto space-y-8">
+
+        {/* HEADER */}
+        <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
+          <div className="space-y-4">
+            <button
+              onClick={() => navigate("/admin/companies")}
+              className="flex items-center gap-2 text-slate-500 hover:text-indigo-600 transition-colors"
+            >
+              <ArrowLeft size={20} />
+              <span>Back to Companies</span>
+            </button>
+
+            <div className="flex items-start gap-4">
+              <div className="p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                <Building2 size={32} className="text-indigo-600 dark:text-indigo-400" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold text-slate-900 dark:text-white">{company.name}</h1>
+                <p className="text-slate-500 dark:text-slate-400 max-w-2xl mt-1">
+                  {company.description || "No description provided for this company."}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="flex items-center gap-2 bg-indigo-600 text-white px-5 py-3 rounded-xl shadow-lg shadow-indigo-200 dark:shadow-none hover:bg-indigo-700 hover:scale-105 transition-all font-semibold"
+          >
+            <UserPlus size={20} />
+            Add Recruiter
+          </button>
         </div>
 
-        <button
-          onClick={() =>
-            setShowAddModal(true)
-          }
-          className="bg-indigo-600 text-white px-5 py-2 rounded-lg shadow hover:scale-105 transition"
-        >
-          + Add Recruiter
-        </button>
-      </div>
+        {/* RECRUITERS GRID */}
+        <div>
+          <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-6 flex items-center gap-2">
+            Team & Performance
+            <span className="bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-full">{company.recruiters.length}</span>
+          </h2>
 
-      {/* RECRUITER GRID */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {company.recruiters.map((rec) => {
-          const recStats = stats[rec._id];
+          {company.recruiters.length === 0 ? (
+            <div className="text-center py-20 bg-slate-50 dark:bg-slate-800/50 rounded-3xl border border-dashed border-slate-300 dark:border-slate-700">
+              <UserPlus size={48} className="mx-auto text-slate-300 mb-4" />
+              <p className="text-slate-500">No recruiters added yet.</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              {company.recruiters.map((rec) => {
+                const recStats = stats[rec._id];
 
-          return (
-            <motion.div
-              key={rec._id}
-              whileHover={{ scale: 1.04 }}
-              className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow"
-            >
-              <h3 className="font-semibold text-indigo-600 dark:text-white">
-                {rec.name}
-              </h3>
+                return (
+                  <motion.div
+                    key={rec._id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-white dark:bg-slate-800 p-6 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col h-full"
+                  >
+                    <div className="flex justify-between items-start mb-6">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold text-lg">
+                          {rec.name.charAt(0)}
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-slate-900 dark:text-white">{rec.name}</h3>
+                          <div className="flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400">
+                            <Mail size={14} />
+                            <span className="truncate max-w-[150px]">{rec.email}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => removeRecruiter(rec._id)}
+                        className="p-2 text-slate-400 hover:bg-red-50 hover:text-red-500 rounded-full transition-colors"
+                        title="Remove Recruiter"
+                      >
+                        <Trash size={18} />
+                      </button>
+                    </div>
 
-              <p className="text-sm text-gray-500 mt-1">
-                {rec.email}
-              </p>
+                    {/* STATS */}
+                    <div className="flex-1">
+                      {recStats ? (
+                        <div className="space-y-6">
+                          <div className="grid grid-cols-2 gap-3">
+                            <StatItem icon={<Briefcase size={16} />} label="Drives" value={recStats.totalDrives} color="text-blue-600 bg-blue-50 dark:bg-blue-900/20" />
+                            <StatItem icon={<FileText size={16} />} label="Apps" value={recStats.totalApplications} color="text-purple-600 bg-purple-50 dark:bg-purple-900/20" />
+                            <StatItem icon={<CheckCircle size={16} />} label="Selected" value={recStats.selected} color="text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20" />
+                            <StatItem icon={<XCircle size={16} />} label="Rejected" value={recStats.rejected} color="text-red-600 bg-red-50 dark:bg-red-900/20" />
+                          </div>
 
-              {/* STATS */}
-              {recStats ? (
-                <>
-                  <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-                    <StatCard
-                      label="Drives"
-                      value={recStats.totalDrives}
-                    />
-                    <StatCard
-                      label="Applications"
-                      value={recStats.totalApplications}
-                    />
-                    <StatCard
-                      label="Selected"
-                      value={recStats.selected}
-                      color="bg-green-100 dark:bg-green-900"
-                    />
-                    <StatCard
-                      label="Rejected"
-                      value={recStats.rejected}
-                      color="bg-red-100 dark:bg-red-900"
-                    />
-                  </div>
+                          <div>
+                            <div className="flex justify-between text-sm mb-2">
+                              <span className="text-slate-500 dark:text-slate-400">Selection Rate</span>
+                              <span className="font-bold text-slate-800 dark:text-white">{recStats.selectionRate}%</span>
+                            </div>
+                            <div className="h-2 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                              <div
+                                className="h-full bg-indigo-500 rounded-full"
+                                style={{ width: `${recStats.selectionRate}%` }}
+                              />
+                            </div>
+                          </div>
 
-                  <p className="mt-3 text-xs text-gray-400">
-                    Selection Rate:{" "}
-                    {recStats.selectionRate}%
-                  </p>
-
-                  {/* 🔥 BAR CHART HERE */}
-                  <div className="mt-4">
-                    <RecruiterBarChart
-                      stats={recStats}
-                    />
-                  </div>
-                </>
-              ) : (
-                <p className="mt-3 text-xs text-gray-400">
-                  Loading stats...
-                </p>
-              )}
-
-              <button
-                onClick={() =>
-                  removeRecruiter(rec._id)
-                }
-                className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg text-sm"
-              >
-                Remove
-              </button>
-            </motion.div>
-          );
-        })}
+                          {/* Chart Wrapper to prevent layout shift */}
+                          <div className="h-40 w-full">
+                            <RecruiterBarChart stats={recStats} />
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="h-full flex items-center justify-center text-slate-400 text-sm animate-pulse">
+                          Loading performance data...
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* ADD MODAL */}
       <AnimatePresence>
         {showAddModal && (
           <motion.div
-            className="fixed inset-0 bg-black/50 flex justify-center items-center z-50"
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex justify-center items-center z-50 p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onClick={() => setShowAddModal(false)}
           >
             <motion.div
-              className="bg-white dark:bg-slate-800 p-8 rounded-2xl w-full max-w-md"
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
+              className="bg-white dark:bg-slate-800 p-8 rounded-[2rem] w-full max-w-md shadow-2xl relative"
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-xl font-bold mb-6 dark:text-white">
+              <button
+                onClick={() => setShowAddModal(false)}
+                className="absolute top-6 right-6 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 transition"
+              >
+                <X size={20} />
+              </button>
+
+              <h3 className="text-2xl font-bold mb-2 text-slate-900 dark:text-white">
                 Add Recruiter
               </h3>
+              <p className="text-slate-500 dark:text-slate-400 mb-6">Create a new access account for this company.</p>
 
-              <form onSubmit={addRecruiter}>
-                <input
-                  type="text"
-                  required
-                  placeholder="Name"
-                  value={newRecruiter.name}
-                  onChange={(e) =>
-                    setNewRecruiter({
-                      ...newRecruiter,
-                      name: e.target.value,
-                    })
-                  }
-                  className="w-full p-3 mb-4 rounded-lg border"
-                />
+              <form onSubmit={addRecruiter} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Full Name</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. John Doe"
+                    value={newRecruiter.name}
+                    onChange={(e) => setNewRecruiter({ ...newRecruiter, name: e.target.value })}
+                    className="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none outline-none focus:ring-2 focus:ring-indigo-500/20 dark:text-white"
+                  />
+                </div>
 
-                <input
-                  type="email"
-                  required
-                  placeholder="Email"
-                  value={newRecruiter.email}
-                  onChange={(e) =>
-                    setNewRecruiter({
-                      ...newRecruiter,
-                      email: e.target.value,
-                    })
-                  }
-                  className="w-full p-3 mb-4 rounded-lg border"
-                />
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Email Address</label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="john@company.com"
+                    value={newRecruiter.email}
+                    onChange={(e) => setNewRecruiter({ ...newRecruiter, email: e.target.value })}
+                    className="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none outline-none focus:ring-2 focus:ring-indigo-500/20 dark:text-white"
+                  />
+                </div>
 
-                <input
-                  type="password"
-                  required
-                  placeholder="Password"
-                  value={newRecruiter.password}
-                  onChange={(e) =>
-                    setNewRecruiter({
-                      ...newRecruiter,
-                      password:
-                        e.target.value,
-                    })
-                  }
-                  className="w-full p-3 mb-6 rounded-lg border"
-                />
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Password</label>
+                  <input
+                    type="password"
+                    required
+                    placeholder="••••••••"
+                    value={newRecruiter.password}
+                    onChange={(e) => setNewRecruiter({ ...newRecruiter, password: e.target.value })}
+                    className="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none outline-none focus:ring-2 focus:ring-indigo-500/20 dark:text-white"
+                  />
+                </div>
 
-                <div className="flex justify-end gap-3">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setShowAddModal(false)
-                    }
-                    className="px-4 py-2 bg-gray-400 text-white rounded-lg"
-                  >
-                    Cancel
-                  </button>
-
+                <div className="pt-4">
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-indigo-600 text-white rounded-lg"
+                    disabled={modalLoading}
+                    className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-200 dark:shadow-none hover:shadow-xl hover:scale-[1.01] transition-all flex items-center justify-center gap-2"
                   >
-                    Add
+                    {modalLoading ? "Creating..." : "Add Recruiter"}
                   </button>
                 </div>
               </form>
@@ -316,22 +341,16 @@ export default function CompanyDetail() {
   );
 }
 
-/* MINI STAT CARD */
-function StatCard({
-  label,
-  value,
-  color = "bg-gray-100 dark:bg-slate-700",
-}) {
+function StatItem({ icon, label, value, color }) {
   return (
-    <div
-      className={`${color} p-3 rounded-lg text-center`}
-    >
-      <p className="font-bold text-sm">
-        {value ?? 0}
-      </p>
-      <p className="text-xs text-gray-600 dark:text-gray-300">
-        {label}
-      </p>
+    <div className={`flex items-center gap-3 p-3 rounded-xl ${color}`}>
+      <div className="bg-white/50 p-1.5 rounded-lg">
+        {icon}
+      </div>
+      <div>
+        <p className="text-xl font-bold leading-none">{value}</p>
+        <p className="text-xs opacity-70 mt-1 font-medium">{label}</p>
+      </div>
     </div>
   );
 }

@@ -3,110 +3,275 @@ import { useParams, useNavigate } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import axiosInstance from "../../services/axiosInstance";
 import toast from "react-hot-toast";
+import {
+    Building2,
+    MapPin,
+    DollarSign,
+    GraduationCap,
+    Users,
+    CalendarDays,
+    FileText,
+    Save,
+    ArrowLeft
+} from "lucide-react";
 
 export default function EditDrive() {
-  const { id } = useParams();
-  const navigate = useNavigate();
+    const { id } = useParams();
+    const navigate = useNavigate();
 
-  const [form, setForm] = useState({});
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    fetchDrive();
-  }, []);
-
-  const fetchDrive = async () => {
-    try {
-      const { data } = await axiosInstance.get(`/drives/admin`);
-      const drive = data.find((d) => d._id === id);
-      setForm(drive);
-    } catch {
-      toast.error("Failed to load drive");
-    }
-  };
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
+    const [form, setForm] = useState({
+        jobRole: "",
+        description: "",
+        qualification: "",
+        vacancies: "",
+        location: "",
+        package: "",
+        deadline: "",
+        isActive: true, // Default
     });
-  };
 
-  const updateDrive = async (e) => {
-    e.preventDefault();
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
 
-    try {
-      setLoading(true);
+    useEffect(() => {
+        fetchDrive();
+    }, [id]);
 
-      await axiosInstance.put(`/drives/${id}`, form);
+    const fetchDrive = async () => {
+        try {
+            // Correct endpoint for single drive
+            const { data } = await axiosInstance.get(`/drives/${id}`);
+            const drive = data.drive;
 
-      toast.success("Drive updated successfully");
+            if (drive) {
+                setForm({
+                    jobRole: drive.jobRole || "",
+                    description: drive.description || "",
+                    qualification: drive.qualification || "",
+                    vacancies: drive.vacancies || "",
+                    location: drive.location || "",
+                    package: drive.package || "",
+                    deadline: drive.deadline ? drive.deadline.split("T")[0] : "",
+                    isActive: drive.isActive ?? true,
+                });
+            }
+        } catch (error) {
+            toast.error("Failed to load drive details");
+            navigate("/admin/drives");
+        } finally {
+            setLoading(false);
+        }
+    };
 
-      navigate("/admin/drives");
-    } catch {
-      toast.error("Update failed");
-    } finally {
-      setLoading(false);
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setForm({
+            ...form,
+            [name]: type === "checkbox" ? checked : value,
+        });
+    };
+
+    const updateDrive = async (e) => {
+        e.preventDefault();
+
+        try {
+            setSaving(true);
+            await axiosInstance.put(`/drives/${id}`, form);
+            toast.success("Drive updated successfully");
+            navigate("/admin/drives");
+        } catch {
+            toast.error("Update failed. Please check inputs.");
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    if (loading) {
+        return (
+            <Layout>
+                <div className="flex justify-center items-center h-screen">
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-indigo-600"></div>
+                </div>
+            </Layout>
+        );
     }
-  };
 
-  return (
-    <Layout>
-      <form
-        onSubmit={updateDrive}
-        className="max-w-3xl mx-auto bg-white dark:bg-slate-800 p-8 rounded-3xl shadow space-y-4"
-      >
-        <h2 className="text-2xl font-bold text-indigo-600">
-          Edit Drive
-        </h2>
+    return (
+        <Layout>
+            <div className="max-w-4xl mx-auto">
+                {/* HEADER */}
+                <div className="flex items-center gap-4 mb-8">
+                    <button
+                        onClick={() => navigate("/admin/drives")}
+                        className="p-2 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:scale-105 transition"
+                    >
+                        <ArrowLeft size={20} className="text-slate-600 dark:text-slate-300" />
+                    </button>
+                    <h1 className="text-3xl font-bold text-slate-800 dark:text-white">Edit Drive</h1>
+                </div>
 
-        <input
-          type="text"
-          name="jobRole"
-          value={form.jobRole || ""}
-          onChange={handleChange}
-          className="w-full p-3 rounded-xl border"
-        />
+                <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl p-8 border border-slate-100 dark:border-slate-700">
+                    <form onSubmit={updateDrive} className="space-y-6">
 
-        <textarea
-          name="description"
-          value={form.description || ""}
-          onChange={handleChange}
-          className="w-full p-3 rounded-xl border"
-        />
+                        {/* JOB ROLE */}
+                        <div>
+                            <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">Job Role</label>
+                            <div className="relative">
+                                <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                                <input
+                                    type="text"
+                                    name="jobRole"
+                                    required
+                                    value={form.jobRole}
+                                    onChange={handleChange}
+                                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 dark:text-white font-medium"
+                                    placeholder="e.g. Software Engineer"
+                                />
+                            </div>
+                        </div>
 
-        <input
-          type="text"
-          name="qualification"
-          value={form.qualification || ""}
-          onChange={handleChange}
-          className="w-full p-3 rounded-xl border"
-        />
+                        {/* DESCRIPTION */}
+                        <div>
+                            <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">Job Description</label>
+                            <div className="relative">
+                                <FileText className="absolute left-4 top-4 text-slate-400" size={20} />
+                                <textarea
+                                    name="description"
+                                    required
+                                    rows={4}
+                                    value={form.description}
+                                    onChange={handleChange}
+                                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 dark:text-white font-medium resize-none"
+                                    placeholder="Detailed job description..."
+                                />
+                            </div>
+                        </div>
 
-        <input
-          type="number"
-          name="vacancies"
-          value={form.vacancies || ""}
-          onChange={handleChange}
-          className="w-full p-3 rounded-xl border"
-        />
+                        <div className="grid md:grid-cols-2 gap-6">
+                            {/* QUALIFICATION */}
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">Qualification</label>
+                                <div className="relative">
+                                    <GraduationCap className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                                    <input
+                                        type="text"
+                                        name="qualification"
+                                        required
+                                        value={form.qualification}
+                                        onChange={handleChange}
+                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 dark:text-white font-medium"
+                                        placeholder="e.g. B.Tech CSE"
+                                    />
+                                </div>
+                            </div>
 
-        <input
-          type="date"
-          name="deadline"
-          value={
-            form.deadline
-              ? form.deadline.split("T")[0]
-              : ""
-          }
-          onChange={handleChange}
-          className="w-full p-3 rounded-xl border"
-        />
+                            {/* LOCATION */}
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">Location</label>
+                                <div className="relative">
+                                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                                    <input
+                                        type="text"
+                                        name="location"
+                                        required
+                                        value={form.location}
+                                        onChange={handleChange}
+                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 dark:text-white font-medium"
+                                        placeholder="e.g. Bangalore"
+                                    />
+                                </div>
+                            </div>
 
-        <button className="w-full py-3 bg-indigo-600 text-white rounded-xl">
-          {loading ? "Updating..." : "Update Drive"}
-        </button>
-      </form>
-    </Layout>
-  );
+                            {/* PACKAGE */}
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">Package (LPA)</label>
+                                <div className="relative">
+                                    <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                                    <input
+                                        type="text"
+                                        name="package"
+                                        required
+                                        value={form.package}
+                                        onChange={handleChange}
+                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 dark:text-white font-medium"
+                                        placeholder="e.g. 12 LPA"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* VACANCIES */}
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">Vacancies</label>
+                                <div className="relative">
+                                    <Users className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                                    <input
+                                        type="number"
+                                        name="vacancies"
+                                        required
+                                        min={1}
+                                        value={form.vacancies}
+                                        onChange={handleChange}
+                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 dark:text-white font-medium"
+                                        placeholder="e.g. 10"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-6 items-end">
+                            {/* DEADLINE */}
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">Deadline</label>
+                                <div className="relative">
+                                    <CalendarDays className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                                    <input
+                                        type="date"
+                                        name="deadline"
+                                        required
+                                        value={form.deadline}
+                                        onChange={handleChange}
+                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 dark:text-white font-medium"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* ACTIVE STATUS TOGGLE */}
+                            <div className="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl flex items-center justify-between">
+                                <span className="font-semibold text-slate-700 dark:text-white">Active Drive</span>
+                                <label className="relative inline-flex items-center cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        name="isActive"
+                                        checked={form.isActive}
+                                        onChange={handleChange}
+                                        className="sr-only peer"
+                                    />
+                                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+                                </label>
+                            </div>
+                        </div>
+
+                        {/* SUBMIT */}
+                        <button
+                            type="submit"
+                            disabled={saving}
+                            className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-200 dark:shadow-none hover:shadow-xl hover:scale-[1.01] transition-all flex items-center justify-center gap-2"
+                        >
+                            {saving ? (
+                                <>
+                                    <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
+                                    Saving...
+                                </>
+                            ) : (
+                                <>
+                                    <Save size={20} />
+                                    Update Drive details
+                                </>
+                            )}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </Layout>
+    );
 }

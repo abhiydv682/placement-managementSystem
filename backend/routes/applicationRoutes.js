@@ -57,7 +57,7 @@ applicationRoutes.get(
 applicationRoutes.put(
   "/:applicationId/status",
   protect,
-  authorizeRoles("recruiter"),
+  authorizeRoles("recruiter", "admin"),
   updateApplicationStatus
 );
 

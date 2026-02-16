@@ -63,6 +63,14 @@ exports.createRecruiter = async (req, res) => {
       });
     }
 
+    // Check if user already exists
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      return res.status(400).json({
+        message: "User with this email already exists",
+      });
+    }
+
     const recruiter = await User.create({
       name,
       email,
@@ -82,6 +90,11 @@ exports.createRecruiter = async (req, res) => {
     });
   } catch (error) {
     console.error("CREATE RECRUITER ERROR:", error);
+    if (error.code === 11000) {
+      return res.status(400).json({
+        message: "Email already in use",
+      });
+    }
     res.status(500).json({
       message: "Error creating recruiter",
     });
@@ -352,9 +365,9 @@ exports.getRecruiterStats = async (req, res) => {
     const selectionRate =
       totalApplications > 0
         ? (
-            (selected / totalApplications) *
-            100
-          ).toFixed(1)
+          (selected / totalApplications) *
+          100
+        ).toFixed(1)
         : 0;
 
     res.json({

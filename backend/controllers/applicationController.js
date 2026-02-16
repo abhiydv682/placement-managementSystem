@@ -176,7 +176,7 @@ exports.updateApplicationStatus = asyncHandler(async (req, res) => {
     });
   }
 
-  const application = await Application.findById(req.params.id);
+  const application = await Application.findById(req.params.applicationId);
 
   if (!application) {
     return res.status(404).json({

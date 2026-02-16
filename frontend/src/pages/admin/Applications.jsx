@@ -13,6 +13,11 @@ export default function Applications() {
   const [statusFilter, setStatusFilter] = useState("All");
 
   /* =============================
+     CONSTANTS
+  ============================== */
+  const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+
+  /* =============================
      FETCH DATA
   ============================== */
 
@@ -40,7 +45,7 @@ export default function Applications() {
   const updateStatus = async (id, status) => {
     try {
       await axiosInstance.put(
-        `/applications/${id}`,
+        `/applications/${id}/status`,
         { status }
       );
 
@@ -155,11 +160,10 @@ export default function Applications() {
               onClick={() =>
                 setStatusFilter(status)
               }
-              className={`px-4 py-2 rounded-xl text-sm transition ${
-                statusFilter === status
-                  ? "bg-indigo-600 text-white shadow-lg"
-                  : "bg-gray-200 dark:bg-slate-700 dark:text-white"
-              }`}
+              className={`px-4 py-2 rounded-xl text-sm transition ${statusFilter === status
+                ? "bg-indigo-600 text-white shadow-lg"
+                : "bg-gray-200 dark:bg-slate-700 dark:text-white"
+                }`}
             >
               {status}
             </button>
@@ -219,12 +223,12 @@ export default function Applications() {
                 </select>
 
                 {/* RESUME BUTTON */}
-                {app.student?.resume
-                  ?.secure_url && (
+                {app.student?.resume?.secure_url && (
                   <a
                     href={
-                      app.student.resume
-                        .secure_url
+                      app.student.resume.secure_url.startsWith("http")
+                        ? app.student.resume.secure_url
+                        : `${BASE_URL}${app.student.resume.secure_url}`
                     }
                     target="_blank"
                     rel="noopener noreferrer"
