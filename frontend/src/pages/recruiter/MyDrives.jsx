@@ -36,18 +36,30 @@ export default function MyDrives() {
 
     return (
         <Layout>
-            <div className="max-w-7xl mx-auto space-y-8 p-4 md:p-6">
+            <div className="max-w-7xl mx-auto space-y-8 p-4 md:p-6 pb-20">
                 {/* HEADER */}
-                <div>
-                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white">My Drives</h1>
-                    <p className="text-slate-500 dark:text-slate-400 mt-1">Manage your active job postings and applications</p>
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <h1 className="text-3xl font-bold text-slate-900">My Drives</h1>
+                        <p className="text-slate-500 mt-1">Manage your active job postings and applications</p>
+                    </div>
+
+                    <Link
+                        to="/recruiter/create-drive"
+                        className="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200"
+                    >
+                        + Create New Drive
+                    </Link>
                 </div>
 
                 {/* DRIVES GRID */}
                 {drives.length === 0 ? (
-                    <div className="text-center py-20 bg-white dark:bg-slate-800 rounded-3xl border border-dashed border-slate-300 dark:border-slate-700">
-                        <Briefcase size={48} className="mx-auto text-slate-300 mb-4" />
-                        <p className="text-slate-500">No drives assigned to you yet.</p>
+                    <div className="text-center py-20 bg-white rounded-[2rem] border border-dashed border-slate-300">
+                        <div className="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Briefcase size={32} className="text-slate-400" />
+                        </div>
+                        <h3 className="text-lg font-bold text-slate-900">No drives posted yet</h3>
+                        <p className="text-slate-500 mt-1 max-w-sm mx-auto">Create your first hiring drive to start accepting applications.</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -57,41 +69,42 @@ export default function MyDrives() {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 }}
-                                className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-shadow group"
+                                whileHover={{ y: -5 }}
+                                className="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 group flex flex-col h-full"
                             >
                                 <div className="flex justify-between items-start mb-4">
-                                    <div className="bg-indigo-50 dark:bg-indigo-900/20 p-3 rounded-2xl group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900/40 transition-colors">
-                                        <Briefcase className="text-indigo-600 dark:text-indigo-400" size={24} />
+                                    <div className="bg-indigo-50 p-3 rounded-2xl group-hover:bg-indigo-100 transition-colors">
+                                        <Briefcase className="text-indigo-600" size={24} />
                                     </div>
-                                    <span className={`px-3 py-1 rounded-full text-xs font-bold ${drive.isActive ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}`}>
+                                    <span className={`px-3 py-1 rounded-full text-xs font-bold ${drive.isActive ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-red-50 text-red-600 border border-red-100'}`}>
                                         {drive.isActive ? 'Active' : 'Closed'}
                                     </span>
                                 </div>
 
-                                <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-1 line-clamp-1">{drive.jobRole}</h3>
-                                <p className="text-sm text-slate-500 line-clamp-2 h-10 mb-4">{drive.description}</p>
+                                <h3 className="font-bold text-xl text-slate-900 mb-2 line-clamp-1 group-hover:text-indigo-600 transition-colors">{drive.jobRole}</h3>
+                                <div className="flex-1">
+                                    <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed mb-4">{drive.description}</p>
 
-                                <div className="space-y-3 mb-6">
-                                    <div className="flex items-center gap-2 text-sm text-slate-500">
-                                        <Calendar size={14} />
-                                        <span>Deadline: {new Date(drive.deadline).toLocaleDateString()}</span>
+                                    <div className="flex items-center gap-2 text-sm text-slate-500 font-medium bg-slate-50 p-3 rounded-xl border border-slate-100 mb-6">
+                                        <Calendar size={16} className="text-slate-400" />
+                                        <span>Deadline: {new Date(drive.deadline).toLocaleDateString(undefined, { dateStyle: 'medium' })}</span>
                                     </div>
                                 </div>
 
-                                <div className="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-slate-700">
+                                <div className="flex items-center justify-between pt-6 border-t border-slate-100 mt-auto">
                                     <div className="text-center">
-                                        <p className="text-xs text-slate-400 font-medium uppercase tracking-wider">Applicants</p>
+                                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Applicants</p>
                                         <div className="flex items-center gap-1 justify-center">
-                                            <Users size={14} className="text-slate-400" />
-                                            <p className="font-bold text-xl text-slate-900 dark:text-white">{drive.applicantCount}</p>
+                                            <Users size={16} className="text-indigo-500" />
+                                            <p className="font-extrabold text-xl text-slate-900">{drive.applicantCount}</p>
                                         </div>
                                     </div>
 
                                     <Link
                                         to={`/recruiter/drive/${drive._id}`}
-                                        className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-5 py-2.5 rounded-xl font-semibold text-sm hover:opacity-90 transition-opacity flex items-center gap-2"
+                                        className="bg-slate-900 text-white px-5 py-2.5 rounded-xl font-bold text-xs hover:bg-slate-800 transition-all flex items-center gap-2 shadow-lg shadow-slate-200"
                                     >
-                                        View Applicants <ChevronRight size={16} />
+                                        Manage <ChevronRight size={14} />
                                     </Link>
                                 </div>
                             </motion.div>

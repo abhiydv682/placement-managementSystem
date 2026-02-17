@@ -32,6 +32,7 @@ import Applications from "./pages/admin/Applications";
 import DriveApplicants from "./pages/recruiter/DriveApplicants";
 import MyDrives from "./pages/recruiter/MyDrives";
 import CandidateDetail from "./pages/recruiter/CandidateDetail";
+import RecruiterCreateDrive from "./pages/recruiter/CreateDrive";
 
 // Common
 import Notifications from "./components/common/Notifications";
@@ -229,12 +230,20 @@ function AppRoutes() {
         }
       />
 
-      {/* 🔥 List of Drives */}
       <Route
         path="/recruiter/drives"
         element={
           <ProtectedRoute role="recruiter">
             <MyDrives />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/recruiter/create-drive"
+        element={
+          <ProtectedRoute role="recruiter">
+            <RecruiterCreateDrive />
           </ProtectedRoute>
         }
       />

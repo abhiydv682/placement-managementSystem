@@ -192,8 +192,8 @@ export default function DriveDetail() {
                 {timeLeft && (
                   <span
                     className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-bold border ${timeLeft === "Expired"
-                        ? "bg-red-50 text-red-600 border-red-100"
-                        : "bg-amber-50 text-amber-600 border-amber-100"
+                      ? "bg-red-50 text-red-600 border-red-100"
+                      : "bg-amber-50 text-amber-600 border-amber-100"
                       }`}
                   >
                     <Clock size={14} />
@@ -239,8 +239,8 @@ export default function DriveDetail() {
                   onClick={applyHandler}
                   disabled={applied || timeLeft === "Expired"}
                   className={`w-full py-4 rounded-xl font-bold text-lg shadow-lg transition-all transform active:scale-95 ${applied
-                      ? "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
-                      : "bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-200 hover:shadow-indigo-300"
+                    ? "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
+                    : "bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-200 hover:shadow-indigo-300"
                     }`}
                 >
                   {applied ? "Application Sent" : timeLeft === "Expired" ? "Deadline Passed" : "Apply Now"}

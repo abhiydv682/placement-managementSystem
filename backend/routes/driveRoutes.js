@@ -31,7 +31,7 @@ driveRoutes.get(
 driveRoutes.post(
   "/",
   protect,
-  authorizeRoles("admin"),
+  authorizeRoles("admin", "recruiter"),
   createDrive
 );
 
@@ -39,7 +39,7 @@ driveRoutes.post(
 driveRoutes.put(
   "/:id",
   protect,
-  authorizeRoles("admin"),
+  authorizeRoles("admin", "recruiter"),
   updateDrive
 );
 
@@ -47,7 +47,7 @@ driveRoutes.put(
 driveRoutes.delete(
   "/:id",
   protect,
-  authorizeRoles("admin"),
+  authorizeRoles("admin", "recruiter"),
   deleteDrive
 );
 

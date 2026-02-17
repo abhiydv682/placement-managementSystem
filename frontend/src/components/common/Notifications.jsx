@@ -69,7 +69,7 @@ export default function Notifications() {
               <Bell size={24} className="text-indigo-600 dark:text-indigo-400" />
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Notifications</h2>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-black">Notifications</h2>
               <p className="text-slate-500 text-sm">You have {unreadCount} unread messages</p>
             </div>
           </div>
