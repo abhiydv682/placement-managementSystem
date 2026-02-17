@@ -36,7 +36,7 @@ export default function MyDrives() {
 
     return (
         <Layout>
-            <div className="max-w-7xl mx-auto space-y-8">
+            <div className="max-w-7xl mx-auto space-y-8 p-4 md:p-6">
                 {/* HEADER */}
                 <div>
                     <h1 className="text-3xl font-bold text-slate-900 dark:text-white">My Drives</h1>

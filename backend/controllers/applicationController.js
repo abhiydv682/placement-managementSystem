@@ -95,6 +95,14 @@ exports.applyToDrive = async (req, res) => {
         company: drive.company,
       });
 
+    /* 🔔 Notify Recruiter */
+    await Notification.create({
+      recipient: drive.createdBy,
+      title: "New Application Received",
+      message: `${req.user.name} applied for ${drive.jobRole}`,
+      link: `/recruiter/drive/${drive._id}`,
+    });
+
     res.status(201).json({
       success: true,
       application,

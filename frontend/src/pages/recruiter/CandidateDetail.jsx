@@ -74,13 +74,20 @@ export default function CandidateDetail() {
 
     return (
         <Layout>
-            <div className="max-w-[1600px] mx-auto p-4 lg:p-6 min-h-screen lg:h-screen flex flex-col">
-                {/* Top Action Bar */}
-                <div className="flex justify-between items-center mb-6">
-                    <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 font-bold transition-all">
-                        <ArrowLeft size={20} /> Back to Drive
+            <div className="max-w-[1600px] mx-auto p-4 lg:p-6 min-h-full lg:h-full flex flex-col">
+                {/* HEAD & ACTIONS */}
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 shrink-0">
+                    <button
+                        onClick={() => window.history.back()}
+                        className="group flex items-center gap-2 text-slate-500 hover:text-indigo-600 transition-colors"
+                    >
+                        <div className="p-2 bg-white rounded-xl shadow-sm group-hover:bg-indigo-50 border border-slate-100 transition-colors">
+                            <ArrowLeft size={18} />
+                        </div>
+                        <span className="font-bold text-sm">Back to Applicants</span>
                     </button>
-                    <div className="flex items-center gap-3">
+
+                    <div className="flex items-center gap-3 bg-white p-2 pr-4 rounded-xl shadow-sm border border-slate-100">
                         <span className="text-sm font-medium text-slate-500">Current Status:</span>
                         <span className={`px-4 py-1 rounded-full text-xs font-bold uppercase ${app.status === 'Selected' ? 'bg-green-100 text-green-700' :
                             app.status === 'Rejected' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'
@@ -90,7 +97,7 @@ export default function CandidateDetail() {
                     </div>
                 </div>
 
-                <div className="flex flex-col lg:flex-row gap-6 flex-1 lg:overflow-hidden">
+                <div className="flex flex-col lg:flex-row gap-6 flex-1 lg:overflow-hidden min-h-0">
                     {/* LEFT: CANDIDATE INFO & ACTION (35%) */}
                     <div className="w-full lg:w-1/3 space-y-6 lg:overflow-y-auto pr-2 custom-scrollbar">
 

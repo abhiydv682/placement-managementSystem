@@ -53,7 +53,7 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl mx-auto space-y-8 p-4 md:p-6">
 
         {/* HEADER */}
         <div>
@@ -183,9 +183,9 @@ export default function Dashboard() {
                         </td>
                         <td className="p-4">
                           <span className={`px-3 py-1 rounded-full text-xs font-bold ${app.status === 'Selected' ? 'bg-emerald-100 text-emerald-700' :
-                              app.status === 'Rejected' ? 'bg-red-100 text-red-700' :
-                                app.status === 'Shortlisted' ? 'bg-blue-100 text-blue-700' :
-                                  'bg-indigo-50 text-indigo-700' // Applied
+                            app.status === 'Rejected' ? 'bg-red-100 text-red-700' :
+                              app.status === 'Shortlisted' ? 'bg-blue-100 text-blue-700' :
+                                'bg-indigo-50 text-indigo-700' // Applied
                             }`}>
                             {app.status}
                           </span>
