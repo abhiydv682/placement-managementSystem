@@ -85,6 +85,7 @@ import {
   Bell,
   LogOut,
   X,
+  BarChart2,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
@@ -98,6 +99,7 @@ export default function Sidebar({ open, setOpen }) {
       { name: "Companies", path: "/admin/companies", icon: Users },
       { name: "Drives", path: "/admin/drives", icon: Briefcase },
       { name: "Applications", path: "/admin/applications", icon: FileText },
+      { name: "Analytics", path: "/admin/analytics", icon: BarChart2 },
     ],
 
     student: [
@@ -131,14 +133,13 @@ export default function Sidebar({ open, setOpen }) {
       )}
 
       <aside
-        className={`fixed md:static z-50 h-screen w-64 flex flex-col bg-gradient-to-b from-indigo-900 via-indigo-800 to-slate-900 text-white shadow-xl transform ${
-          open ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 transition-transform duration-300`}
+        className={`fixed md:static z-50 h-screen w-64 flex flex-col bg-gradient-to-b from-indigo-900 via-indigo-800 to-slate-900 text-white shadow-xl transform ${open ? "translate-x-0" : "-translate-x-full"
+          } md:translate-x-0 transition-transform duration-300`}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-white/10">
           <h2 className="text-xl font-bold tracking-wide">
-            Avani Portal
+            Avani Enterprise
           </h2>
 
           <X
@@ -158,10 +159,9 @@ export default function Sidebar({ open, setOpen }) {
                 to={item.path}
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
-                    isActive
-                      ? "bg-indigo-600 shadow-lg"
-                      : "hover:bg-indigo-700/70"
+                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${isActive
+                    ? "bg-indigo-600 shadow-lg"
+                    : "hover:bg-indigo-700/70"
                   }`
                 }
               >

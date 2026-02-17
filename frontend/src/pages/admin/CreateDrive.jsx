@@ -81,119 +81,6 @@
 //       );
 //     } finally {
 //       setLoading(false);
-//     }
-//   };
-
-//   return (
-//     <Layout>
-//       <motion.div
-//         initial={{ opacity: 0, y: 40 }}
-//         animate={{ opacity: 1, y: 0 }}
-//         className="max-w-3xl mx-auto"
-//       >
-//         <form
-//           onSubmit={submitHandler}
-//           className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-xl space-y-5"
-//         >
-//           <h2 className="text-2xl font-bold text-indigo-600 dark:text-white">
-//             Create New Drive
-//           </h2>
-
-//           {/* Company */}
-//           <select
-//             name="company"
-//             value={form.company}
-//             onChange={handleChange}
-//             required
-//             className="w-full p-3 rounded-xl border dark:bg-slate-700 dark:text-white"
-//           >
-//             <option value="">Select Company *</option>
-//             {companies.map((c) => (
-//               <option key={c._id} value={c._id}>
-//                 {c.name}
-//               </option>
-//             ))}
-//           </select>
-
-//           {/* Job Role */}
-//           <input
-//             type="text"
-//             name="jobRole"
-//             value={form.jobRole}
-//             onChange={handleChange}
-//             placeholder="Job Role *"
-//             required
-//             className="w-full p-3 rounded-xl border dark:bg-slate-700 dark:text-white"
-//           />
-
-//           {/* Description */}
-//           <textarea
-//             name="description"
-//             value={form.description}
-//             onChange={handleChange}
-//             placeholder="Description *"
-//             rows="4"
-//             required
-//             className="w-full p-3 rounded-xl border dark:bg-slate-700 dark:text-white"
-//           />
-
-//           {/* Qualification */}
-//           <input
-//             type="text"
-//             name="qualification"
-//             value={form.qualification}
-//             onChange={handleChange}
-//             placeholder="Required Qualification *"
-//             required
-//             className="w-full p-3 rounded-xl border dark:bg-slate-700 dark:text-white"
-//           />
-
-//           {/* Grid Row */}
-//           <div className="grid md:grid-cols-3 gap-4">
-//             <input
-//               type="number"
-//               name="vacancies"
-//               value={form.vacancies}
-//               onChange={handleChange}
-//               placeholder="Vacancies *"
-//               required
-//               className="p-3 rounded-xl border dark:bg-slate-700 dark:text-white"
-//             />
-
-//             <input
-//               type="text"
-//               name="location"
-//               value={form.location}
-//               onChange={handleChange}
-//               placeholder="Location *"
-//               required
-//               className="p-3 rounded-xl border dark:bg-slate-700 dark:text-white"
-//             />
-
-//             <input
-//               type="date"
-//               name="deadline"
-//               value={form.deadline}
-//               onChange={handleChange}
-//               required
-//               className="p-3 rounded-xl border dark:bg-slate-700 dark:text-white"
-//             />
-//           </div>
-
-//           {/* Package */}
-//           <input
-//             type="text"
-//             name="package"
-//             value={form.package}
-//             onChange={handleChange}
-//             placeholder="CTC (Optional)"
-//             className="w-full p-3 rounded-xl border dark:bg-slate-700 dark:text-white"
-//           />
-
-//           {/* Submit */}
-//           <button
-//             disabled={loading}
-//             className={`w-full py-3 rounded-xl text-white font-semibold transition ${
 //               loading
 //                 ? "bg-indigo-400 cursor-not-allowed"
 //                 : "bg-indigo-600 hover:scale-105"
@@ -338,19 +225,24 @@ export default function CreateDrive() {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="max-w-4xl mx-auto px-4"
+        className="max-w-4xl mx-auto px-4 py-10"
       >
         <form
           onSubmit={submitHandler}
-          className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-xl space-y-6"
+          className="bg-white p-8 rounded-3xl shadow-xl space-y-6 border border-slate-100"
         >
-          <h2 className="text-2xl font-bold text-indigo-600 dark:text-white">
-            Create New Drive
-          </h2>
+          <div className="flex items-center gap-3 mb-2">
+            <div className="p-3 bg-indigo-50 rounded-xl">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-indigo-600"><rect width="20" height="14" x="2" y="7" rx="2" ry="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></svg>
+            </div>
+            <h2 className="text-2xl font-bold text-slate-900">
+              Create New Drive
+            </h2>
+          </div>
 
           {/* Company */}
           <div>
-            <label className="text-sm font-medium dark:text-gray-300">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               Company *
             </label>
             <select
@@ -358,7 +250,7 @@ export default function CreateDrive() {
               value={form.company}
               onChange={handleChange}
               required
-              className="w-full mt-2 p-3 rounded-xl border dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
             >
               <option value="">Select Company</option>
               {companies.map((c) => (
@@ -371,7 +263,7 @@ export default function CreateDrive() {
 
           {/* Job Role */}
           <div>
-            <label className="text-sm font-medium dark:text-gray-300">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               Job Role *
             </label>
             <input
@@ -381,13 +273,13 @@ export default function CreateDrive() {
               onChange={handleChange}
               placeholder="e.g. Backend Developer"
               required
-              className="w-full mt-2 p-3 rounded-xl border dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
             />
           </div>
 
           {/* Description */}
           <div>
-            <label className="text-sm font-medium dark:text-gray-300">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               Description *
             </label>
             <textarea
@@ -397,13 +289,13 @@ export default function CreateDrive() {
               rows="4"
               placeholder="Drive details..."
               required
-              className="w-full mt-2 p-3 rounded-xl border dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all resize-none"
             />
           </div>
 
           {/* Qualification */}
           <div>
-            <label className="text-sm font-medium dark:text-gray-300">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               Qualification *
             </label>
             <input
@@ -413,45 +305,60 @@ export default function CreateDrive() {
               onChange={handleChange}
               placeholder="e.g. B.Tech / MCA"
               required
-              className="w-full mt-2 p-3 rounded-xl border dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
             />
           </div>
 
           {/* Grid Section */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <input
-              type="number"
-              name="vacancies"
-              value={form.vacancies}
-              onChange={handleChange}
-              placeholder="Vacancies *"
-              required
-              className="p-3 rounded-xl border dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-500"
-            />
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">
+                Vacancies *
+              </label>
+              <input
+                type="number"
+                name="vacancies"
+                value={form.vacancies}
+                onChange={handleChange}
+                placeholder="e.g. 10"
+                required
+                className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+              />
+            </div>
 
-            <input
-              type="text"
-              name="location"
-              value={form.location}
-              onChange={handleChange}
-              placeholder="Location *"
-              required
-              className="p-3 rounded-xl border dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-500"
-            />
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">
+                Location *
+              </label>
+              <input
+                type="text"
+                name="location"
+                value={form.location}
+                onChange={handleChange}
+                placeholder="e.g. Bangalore"
+                required
+                className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+              />
+            </div>
 
-            <input
-              type="date"
-              name="deadline"
-              value={form.deadline}
-              onChange={handleChange}
-              required
-              className="p-3 rounded-xl border dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-500"
-            />
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">
+                Deadline *
+              </label>
+              <input
+                type="date"
+                name="deadline"
+                value={form.deadline}
+                onChange={handleChange}
+                required
+                className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+              />
+            </div>
           </div>
 
           {/* Package */}
           <div>
-            <label className="text-sm font-medium dark:text-gray-300">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               CTC (Optional)
             </label>
             <input
@@ -460,20 +367,19 @@ export default function CreateDrive() {
               value={form.package}
               onChange={handleChange}
               placeholder="e.g. 6 LPA"
-              className="w-full mt-2 p-3 rounded-xl border dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
             />
           </div>
 
           {/* Submit Button */}
           <button
             disabled={loading}
-            className={`w-full py-3 rounded-xl text-white font-semibold transition transform ${
-              loading
-                ? "bg-indigo-400 cursor-not-allowed"
-                : "bg-indigo-600 hover:scale-105 hover:shadow-lg"
-            }`}
+            className={`w-full py-4 rounded-xl text-white font-bold text-lg shadow-lg shadow-indigo-200 transition-all transform ${loading
+              ? "bg-indigo-400 cursor-not-allowed"
+              : "bg-indigo-600 hover:scale-[1.02] hover:shadow-indigo-300"
+              }`}
           >
-            {loading ? "Creating..." : "Create Drive"}
+            {loading ? "Creating Drive..." : "Create Drive"}
           </button>
         </form>
       </motion.div>

@@ -103,19 +103,19 @@ export default function EditDrive() {
                 <div className="flex items-center gap-4 mb-8">
                     <button
                         onClick={() => navigate("/admin/drives")}
-                        className="p-2 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:scale-105 transition"
+                        className="p-2 bg-white rounded-xl shadow-sm hover:scale-105 transition"
                     >
-                        <ArrowLeft size={20} className="text-slate-600 dark:text-slate-300" />
+                        <ArrowLeft size={20} className="text-slate-600" />
                     </button>
-                    <h1 className="text-3xl font-bold text-slate-800 dark:text-white">Edit Drive</h1>
+                    <h1 className="md:text-3xl text-2xl font-bold text-slate-800">Edit Drive</h1>
                 </div>
 
-                <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl p-8 border border-slate-100 dark:border-slate-700">
+                <div className="bg-white rounded-3xl shadow-xl p-8 border border-slate-100">
                     <form onSubmit={updateDrive} className="space-y-6">
 
                         {/* JOB ROLE */}
                         <div>
-                            <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">Job Role</label>
+                            <label className="block text-sm font-semibold text-slate-600 mb-2">Job Role</label>
                             <div className="relative">
                                 <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                                 <input
@@ -124,7 +124,7 @@ export default function EditDrive() {
                                     required
                                     value={form.jobRole}
                                     onChange={handleChange}
-                                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 dark:text-white font-medium"
+                                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 font-medium"
                                     placeholder="e.g. Software Engineer"
                                 />
                             </div>
@@ -132,7 +132,7 @@ export default function EditDrive() {
 
                         {/* DESCRIPTION */}
                         <div>
-                            <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">Job Description</label>
+                            <label className="block text-sm font-semibold text-slate-600 mb-2">Job Description</label>
                             <div className="relative">
                                 <FileText className="absolute left-4 top-4 text-slate-400" size={20} />
                                 <textarea
@@ -141,7 +141,7 @@ export default function EditDrive() {
                                     rows={4}
                                     value={form.description}
                                     onChange={handleChange}
-                                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 dark:text-white font-medium resize-none"
+                                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 font-medium resize-none"
                                     placeholder="Detailed job description..."
                                 />
                             </div>
@@ -150,7 +150,7 @@ export default function EditDrive() {
                         <div className="grid md:grid-cols-2 gap-6">
                             {/* QUALIFICATION */}
                             <div>
-                                <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">Qualification</label>
+                                <label className="block text-sm font-semibold text-slate-600 mb-2">Qualification</label>
                                 <div className="relative">
                                     <GraduationCap className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                                     <input
@@ -159,7 +159,7 @@ export default function EditDrive() {
                                         required
                                         value={form.qualification}
                                         onChange={handleChange}
-                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 dark:text-white font-medium"
+                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 font-medium"
                                         placeholder="e.g. B.Tech CSE"
                                     />
                                 </div>
@@ -167,7 +167,7 @@ export default function EditDrive() {
 
                             {/* LOCATION */}
                             <div>
-                                <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">Location</label>
+                                <label className="block text-sm font-semibold text-slate-600 mb-2">Location</label>
                                 <div className="relative">
                                     <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                                     <input
@@ -176,7 +176,7 @@ export default function EditDrive() {
                                         required
                                         value={form.location}
                                         onChange={handleChange}
-                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 dark:text-white font-medium"
+                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 font-medium"
                                         placeholder="e.g. Bangalore"
                                     />
                                 </div>
@@ -184,7 +184,7 @@ export default function EditDrive() {
 
                             {/* PACKAGE */}
                             <div>
-                                <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">Package (LPA)</label>
+                                <label className="block text-sm font-semibold text-slate-600 mb-2">Package (LPA)</label>
                                 <div className="relative">
                                     <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                                     <input
@@ -193,7 +193,7 @@ export default function EditDrive() {
                                         required
                                         value={form.package}
                                         onChange={handleChange}
-                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 dark:text-white font-medium"
+                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 font-medium"
                                         placeholder="e.g. 12 LPA"
                                     />
                                 </div>
@@ -201,7 +201,7 @@ export default function EditDrive() {
 
                             {/* VACANCIES */}
                             <div>
-                                <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">Vacancies</label>
+                                <label className="block text-sm font-semibold text-slate-600 mb-2">Vacancies</label>
                                 <div className="relative">
                                     <Users className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                                     <input
@@ -211,7 +211,7 @@ export default function EditDrive() {
                                         min={1}
                                         value={form.vacancies}
                                         onChange={handleChange}
-                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 dark:text-white font-medium"
+                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 font-medium"
                                         placeholder="e.g. 10"
                                     />
                                 </div>
@@ -221,7 +221,7 @@ export default function EditDrive() {
                         <div className="grid md:grid-cols-2 gap-6 items-end">
                             {/* DEADLINE */}
                             <div>
-                                <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">Deadline</label>
+                                <label className="block text-sm font-semibold text-slate-600 mb-2">Deadline</label>
                                 <div className="relative">
                                     <CalendarDays className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                                     <input
@@ -230,14 +230,14 @@ export default function EditDrive() {
                                         required
                                         value={form.deadline}
                                         onChange={handleChange}
-                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 dark:text-white font-medium"
+                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 border-none focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 font-medium"
                                     />
                                 </div>
                             </div>
 
                             {/* ACTIVE STATUS TOGGLE */}
-                            <div className="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl flex items-center justify-between">
-                                <span className="font-semibold text-slate-700 dark:text-white">Active Drive</span>
+                            <div className="bg-slate-50 p-4 rounded-xl flex items-center justify-between border border-slate-100">
+                                <span className="font-semibold text-slate-700">Active Drive</span>
                                 <label className="relative inline-flex items-center cursor-pointer">
                                     <input
                                         type="checkbox"
@@ -246,7 +246,7 @@ export default function EditDrive() {
                                         onChange={handleChange}
                                         className="sr-only peer"
                                     />
-                                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+                                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
                                 </label>
                             </div>
                         </div>

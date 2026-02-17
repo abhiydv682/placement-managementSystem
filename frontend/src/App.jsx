@@ -12,6 +12,7 @@ import Register from "./pages/auth/Register";
 import AdminDashboard from "./pages/admin/Dashboard";
 import StudentDashboard from "./pages/student/Dashboard";
 import RecruiterDashboard from "./pages/recruiter/Dashboard";
+import Analytics from "./pages/admin/Analytics";
 
 // Student Pages
 import StudentDrives from "./pages/student/Drives";
@@ -64,22 +65,23 @@ const ProtectedRoute = ({ children, role }) => {
    Routes
 ========================== */
 
+// Public Pages
+import Landing from "./pages/Landing";
+
+// Stats
+// ... imports
+
+/* ==========================
+   Routes
+========================== */
+
 function AppRoutes() {
   const { user } = useAuth();
 
   return (
     <Routes>
-      {/* Default redirect */}
-      <Route
-        path="/"
-        element={
-          user ? (
-            <Navigate to={`/${user.role}`} replace />
-          ) : (
-            <Navigate to="/login" replace />
-          )
-        }
-      />
+      {/* Default / Landing */}
+      <Route path="/" element={<Landing />} />
 
       {/* PUBLIC ROUTES */}
       <Route path="/login" element={<Login />} />
@@ -91,6 +93,17 @@ function AppRoutes() {
         element={
           <ProtectedRoute role="admin">
             <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+
+
+      <Route
+        path="/admin/analytics"
+        element={
+          <ProtectedRoute role="admin">
+            <Analytics />
           </ProtectedRoute>
         }
       />
@@ -257,6 +270,7 @@ function AppRoutes() {
 
       {/* 404 */}
       <Route path="*" element={<Navigate to="/" replace />} />
+
     </Routes>
   );
 }

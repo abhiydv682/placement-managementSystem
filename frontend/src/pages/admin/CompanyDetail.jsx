@@ -158,7 +158,7 @@ export default function CompanyDetail() {
 
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl mx-auto space-y-8 pb-20">
 
         {/* HEADER */}
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
@@ -172,12 +172,12 @@ export default function CompanyDetail() {
             </button>
 
             <div className="flex items-start gap-4">
-              <div className="p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
-                <Building2 size={32} className="text-indigo-600 dark:text-indigo-400" />
+              <div className="p-4 bg-white rounded-2xl shadow-sm border border-slate-100">
+                <Building2 size={32} className="text-indigo-600" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-slate-900 dark:text-white">{company.name}</h1>
-                <p className="text-slate-500 dark:text-slate-400 max-w-2xl mt-1">
+                <h1 className="text-3xl font-bold text-slate-900">{company.name}</h1>
+                <p className="text-slate-500 max-w-2xl mt-1">
                   {company.description || "No description provided for this company."}
                 </p>
               </div>
@@ -195,7 +195,7 @@ export default function CompanyDetail() {
 
         {/* RECRUITERS GRID */}
         <div>
-          <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-6 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-slate-800 dark:text-gray-600 mb-6 flex items-center gap-2">
             Team & Performance
             <span className="bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-full">{company.recruiters.length}</span>
           </h2>
@@ -215,16 +215,16 @@ export default function CompanyDetail() {
                     key={rec._id}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-white dark:bg-slate-800 p-6 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col h-full"
+                    className="bg-white p-6 rounded-[2rem] shadow-md hover:shadow-lg transition-shadow flex flex-col h-full"
                   >
                     <div className="flex justify-between items-start mb-6">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold text-lg">
+                        <div className="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center text-indigo-600 font-bold text-lg">
                           {rec.name.charAt(0)}
                         </div>
                         <div>
-                          <h3 className="font-bold text-slate-900 dark:text-white">{rec.name}</h3>
-                          <div className="flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400">
+                          <h3 className="font-bold text-slate-900">{rec.name}</h3>
+                          <div className="flex items-center gap-1.5 text-sm text-slate-500">
                             <Mail size={14} />
                             <span className="truncate max-w-[150px]">{rec.email}</span>
                           </div>
@@ -252,8 +252,8 @@ export default function CompanyDetail() {
 
                           <div>
                             <div className="flex justify-between text-sm mb-2">
-                              <span className="text-slate-500 dark:text-slate-400">Selection Rate</span>
-                              <span className="font-bold text-slate-800 dark:text-white">{recStats.selectionRate}%</span>
+                              <span className="text-slate-500">Selection Rate</span>
+                              <span className="font-bold text-slate-800">{recStats.selectionRate}%</span>
                             </div>
                             <div className="h-2 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
                               <div
@@ -392,13 +392,13 @@ export default function CompanyDetail() {
 
 function StatItem({ icon, label, value, color }) {
   return (
-    <div className={`flex items-center gap-3 p-3 rounded-xl ${color}`}>
-      <div className="bg-white/50 p-1.5 rounded-lg">
+    <div className={`flex items-center gap-3 p-3 rounded-xl bg-slate-50 ${color.split(' ')[0]}`}>
+      <div className="bg-white p-1.5 rounded-lg shadow-sm">
         {icon}
       </div>
       <div>
-        <p className="text-xl font-bold leading-none">{value}</p>
-        <p className="text-xs opacity-70 mt-1 font-medium">{label}</p>
+        <p className="text-xl font-bold leading-none text-slate-800">{value}</p>
+        <p className="text-xs opacity-70 mt-1 font-medium text-slate-500">{label}</p>
       </div>
     </div>
   );

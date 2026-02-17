@@ -53,7 +53,7 @@ export default function SelectionPie({ selected, rejected }) {
             height={36}
             iconType="circle"
             formatter={(value, entry) => (
-              <span className="text-slate-600 dark:text-slate-300 font-medium ml-1">{value}</span>
+              <span className="text-slate-600 font-medium ml-1">{value}</span>
             )}
           />
         </PieChart>

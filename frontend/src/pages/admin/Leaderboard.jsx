@@ -35,11 +35,11 @@ export default function Leaderboard() {
     <Layout>
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white flex justify-center items-center gap-3">
+          <h2 className="text-4xl font-extrabold text-slate-900 flex justify-center items-center gap-3">
             <Trophy className="text-yellow-500" size={40} />
             Recruiter Leaderboard
           </h2>
-          <p className="text-slate-500 dark:text-slate-400 mt-2">Top performers based on candidate selections</p>
+          <p className="text-slate-500 mt-2">Top performers based on candidate selections</p>
         </div>
 
         {/* PODIUM SECTION */}
@@ -93,7 +93,7 @@ export default function Leaderboard() {
         )}
 
         {/* LIST SECTION */}
-        <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
           {others.length > 0 ? (
             others.map((r, index) => (
               <motion.div
@@ -101,21 +101,21 @@ export default function Leaderboard() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.05 }}
-                className="flex items-center justify-between p-5 border-b last:border-0 border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
+                className="flex items-center justify-between p-5 border-b last:border-0 border-slate-100 hover:bg-slate-50 transition-colors"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center font-bold text-slate-500 dark:text-slate-400">
+                  <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-500">
                     #{index + 4}
                   </div>
                   <div>
-                    <p className="font-bold text-slate-900 dark:text-white">{r.name}</p>
+                    <p className="font-bold text-slate-900">{r.name}</p>
                     <p className="text-xs text-slate-500 font-medium">Recruiter</p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold bg-indigo-50 dark:bg-indigo-900/20 px-4 py-1.5 rounded-full">
+                <div className="flex items-center gap-2 text-indigo-600 font-bold bg-indigo-50 px-4 py-1.5 rounded-full">
                   <TrendingUp size={16} />
-                  {r.selected} <span className="text-xs font-normal text-indigo-400 dark:text-indigo-300">Selected</span>
+                  {r.selected} <span className="text-xs font-normal text-indigo-400">Selected</span>
                 </div>
               </motion.div>
             ))

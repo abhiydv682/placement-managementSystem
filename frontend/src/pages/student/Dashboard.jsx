@@ -79,35 +79,35 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto space-y-8 p-4 md:p-6">
+      <div className="max-w-7xl mx-auto space-y-8 p-4 md:p-6 pb-20">
 
         {/* HEADER */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-slate-900">
               Hello, {profile?.name.split(" ")[0]} 👋
             </h1>
-            <p className="text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-2">
+            <p className="text-slate-500 mt-1 flex items-center gap-2">
               <CalendarDays size={16} />
               {currentDate}
             </p>
           </div>
 
           {/* PROFILE COMPLETION WIDGET */}
-          <div className="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex items-center gap-4 min-w-[280px]">
+          <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 min-w-[280px]">
             <div className="relative w-12 h-12 flex items-center justify-center">
               <svg className="transform -rotate-90 w-12 h-12">
-                <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="4" fill="transparent" className="text-slate-100 dark:text-slate-700" />
+                <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="4" fill="transparent" className="text-slate-100" />
                 <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="4" fill="transparent"
                   strokeDasharray={2 * Math.PI * 20}
                   strokeDashoffset={2 * Math.PI * 20 * (1 - profileCompletion / 100)}
                   className="text-indigo-600 transition-all duration-1000 ease-out"
                 />
               </svg>
-              <span className="absolute text-xs font-bold text-indigo-600 dark:text-indigo-400">{profileCompletion}%</span>
+              <span className="absolute text-xs font-bold text-indigo-600">{profileCompletion}%</span>
             </div>
             <div>
-              <p className="text-sm font-bold text-slate-900 dark:text-white">Profile Completion</p>
+              <p className="text-sm font-bold text-slate-900">Profile Completion</p>
               <p className="text-xs text-slate-500">Complete your profile to apply</p>
             </div>
           </div>
@@ -144,9 +144,9 @@ export default function Dashboard() {
         <div className="grid lg:grid-cols-3 gap-8">
 
           {/* RECENT APPLICATIONS LIST */}
-          <div className="lg:col-span-2 bg-white dark:bg-slate-800 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 p-6">
+          <div className="lg:col-span-2 bg-white rounded-[2rem] shadow-sm border border-slate-100 p-6">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white">Recent Applications</h3>
+              <h3 className="text-xl font-bold text-slate-900">Recent Applications</h3>
               <button className="text-sm text-indigo-600 font-semibold hover:underline">View All</button>
             </div>
 
@@ -163,17 +163,17 @@ export default function Dashboard() {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700/30 rounded-2xl hover:bg-indigo-50 dark:hover:bg-indigo-900/10 transition-colors group"
+                    className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl hover:bg-slate-100 transition-colors group"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 flex items-center justify-center text-slate-700 dark:text-slate-300 font-bold shadow-sm">
+                      <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-slate-700 font-bold shadow-sm border border-slate-100">
                         {app.company?.name.charAt(0)}
                       </div>
                       <div>
-                        <h4 className="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 transition-colors">
+                        <h4 className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
                           {app.drive?.jobRole}
                         </h4>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{app.company?.name}</p>
+                        <p className="text-xs text-slate-500 font-medium">{app.company?.name}</p>
                       </div>
                     </div>
                     <StatusBadge status={app.status} />
@@ -198,16 +198,16 @@ function StatCard({ title, value, color, icon }) {
   return (
     <motion.div
       whileHover={{ y: -5 }}
-      className="bg-white dark:bg-slate-800 p-6 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700 relative overflow-hidden"
+      className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 relative overflow-hidden"
     >
       <div className={`absolute -right-6 -top-6 w-24 h-24 rounded-full opacity-10 ${color}`}></div>
 
       <div className="flex justify-between items-start">
         <div>
-          <p className="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">{title}</p>
-          <h3 className="text-3xl font-extrabold text-slate-900 dark:text-white">{value}</h3>
+          <p className="text-slate-500 text-sm font-medium mb-1">{title}</p>
+          <h3 className="text-3xl font-extrabold text-slate-900">{value}</h3>
         </div>
-        <div className={`${color} p-3 rounded-2xl shadow-lg shadow-indigo-100 dark:shadow-none`}>
+        <div className={`${color} p-3 rounded-2xl shadow-lg shadow-indigo-100`}>
           {icon}
         </div>
       </div>

@@ -298,6 +298,13 @@ exports.getDashboardStats = async (req, res) => {
         status: "Rejected",
       });
 
+    // ✅ Fetch Recent Drives
+    const recentDrives = await Drive.find()
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .populate("company", "name")
+      .select("jobRole status createdAt company");
+
     res.json({
       totalStudents,
       totalCompanies,
@@ -305,6 +312,7 @@ exports.getDashboardStats = async (req, res) => {
       totalApplications,
       selectedCount,
       rejectedCount,
+      recentDrives, // <--- Added this
     });
   } catch (error) {
     console.error("DASHBOARD ERROR:", error);

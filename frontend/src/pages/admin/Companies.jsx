@@ -189,10 +189,10 @@ export default function Companies() {
         {/* HEADER */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            <h1 className="md:text-3xl text-2xl font-extrabold text-slate-900 dark:text-gray-800 tracking-tight">
               Company Management
             </h1>
-            <p className="text-slate-500 dark:text-slate-400 mt-2">
+            <p className="text-slate-700 dark:text-slate-500 mt-2">
               Manage partnering companies and their recruiters
             </p>
           </div>
@@ -208,8 +208,8 @@ export default function Companies() {
 
         {/* STATS OVERVIEW */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <StatCard title="Total Companies" value={totalCompanies} icon={<Building2 size={24} />} color="bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400" />
-          <StatCard title="Total Recruiters" value={totalRecruiters} icon={<Users size={24} />} color="bg-purple-50 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400" />
+          <StatCard title="Total Companies" value={totalCompanies} icon={<Building2 size={24} />} color="bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400" />
+          <StatCard title="Total Recruiters" value={totalRecruiters} icon={<Users size={24} />} color="bg-indigo-50 text-indigo-600 dark:bg-indigo-900/20 dark:text-indigo-400" />
         </div>
 
         {/* SEARCH */}
@@ -219,7 +219,7 @@ export default function Companies() {
             placeholder="Search companies or recruiters..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500/20 outline-none text-slate-700 dark:text-white transition-all"
+            className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white shadow-sm outline-none text-slate-700 transition-all focus:ring-2 focus:ring-indigo-500/20"
           />
         </div>
 
@@ -246,19 +246,19 @@ export default function Companies() {
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ delay: index * 0.05 }}
                     onClick={() => navigate(`/admin/company/${company._id}`)}
-                    className="group bg-white dark:bg-slate-800 p-6 rounded-[2rem] shadow-sm hover:shadow-xl border border-slate-100 dark:border-slate-700/50 transition-all duration-300 cursor-pointer relative overflow-hidden"
+                    className="group bg-white p-6 rounded-[2rem] shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer relative overflow-hidden"
                   >
                     <div className="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity">
                       <div className="flex gap-2">
                         <button
                           onClick={(e) => openEdit(company, e)}
-                          className="p-2 bg-slate-100 dark:bg-slate-700 rounded-full text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-600 hover:text-indigo-600 transition"
+                          className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-600 hover:text-indigo-600 transition"
                         >
                           <Edit size={16} />
                         </button>
                         <button
                           onClick={(e) => deleteCompany(company._id, e)}
-                          className="p-2 bg-red-50 dark:bg-red-900/20 rounded-full text-red-600 dark:text-red-400 hover:bg-red-100 transition"
+                          className="p-2 bg-red-50 hover:bg-red-100 rounded-full text-red-600 hover:text-red-700 transition"
                         >
                           <Trash size={16} />
                         </button>
@@ -266,23 +266,23 @@ export default function Companies() {
                     </div>
 
                     <div className="flex items-start gap-4">
-                      <div className="w-14 h-14 bg-indigo-50 dark:bg-slate-700 rounded-2xl flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                      <div className="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-600">
                         <Building2 size={28} />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 transition-colors">
+                        <h3 className="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
                           {company.name}
                         </h3>
-                        <div className="flex items-center gap-2 mt-2 text-sm text-slate-500 dark:text-slate-400">
+                        <div className="flex items-center gap-2 mt-2 text-sm text-slate-500">
                           <Users size={14} />
                           <span>{company.recruiters?.length} Recruiters</span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+                    <div className="mt-6 pt-6 border-t border-slate-100">
                       <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Primary Contact</p>
-                      <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+                      <div className="flex items-center gap-2 text-sm text-slate-600">
                         <Mail size={16} className="text-indigo-500" />
                         <span className="truncate">
                           {company.recruiters?.[0]?.email || "No recruiter assigned"}
@@ -388,10 +388,10 @@ export default function Companies() {
 
 function StatCard({ title, value, icon, color }) {
   return (
-    <div className="bg-white dark:bg-slate-800 p-6 rounded-[1.5rem] shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-between">
+    <div className="bg-white p-6 rounded-[1.5rem] shadow-sm flex items-center justify-between">
       <div>
-        <p className="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">{title}</p>
-        <p className="text-3xl font-bold text-slate-900 dark:text-white">{value}</p>
+        <p className="text-slate-500 text-sm font-medium mb-1">{title}</p>
+        <p className="text-3xl font-bold text-slate-900">{value}</p>
       </div>
       <div className={`p-4 rounded-2xl ${color}`}>
         {icon}

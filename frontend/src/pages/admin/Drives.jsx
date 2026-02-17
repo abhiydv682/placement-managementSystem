@@ -232,9 +232,9 @@ export default function Drives() {
   =============================== */
 
   const getStatus = (deadline) => {
-    return new Date(deadline) < new Date()
-      ? "Expired"
-      : "Active";
+    const deadlineDate = new Date(deadline);
+    deadlineDate.setHours(23, 59, 59, 999);
+    return deadlineDate < new Date() ? "Expired" : "Active";
   };
 
   /* ==============================
@@ -242,7 +242,9 @@ export default function Drives() {
   =============================== */
 
   const getCountdown = (deadline) => {
-    const diff = new Date(deadline).getTime() - new Date().getTime();
+    const deadlineDate = new Date(deadline);
+    deadlineDate.setHours(23, 59, 59, 999);
+    const diff = deadlineDate.getTime() - new Date().getTime();
     if (diff <= 0) return "Expired";
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     return `${days} days left`;
@@ -279,7 +281,7 @@ export default function Drives() {
         {/* HEADER */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            <h1 className="md:text-3xl text-2xl font-extrabold text-slate-900 dark:text-gray-800 tracking-tight">
               Drive Management
             </h1>
             <p className="text-slate-500 dark:text-slate-400 mt-2">
@@ -304,14 +306,14 @@ export default function Drives() {
         </div>
 
         {/* CONTROLS */}
-        <div className="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 mb-6 flex flex-col md:flex-row gap-4">
+        <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 mb-6 flex flex-col md:flex-row gap-4">
           <div className="relative flex-1">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
             <input
               placeholder="Search by role or company..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-700/50 border-none outline-none focus:ring-2 focus:ring-indigo-500/20 text-slate-700 dark:text-white transition-all"
+              className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 border-none outline-none focus:ring-2 focus:ring-indigo-500/20 text-slate-700 transition-all"
             />
           </div>
 
@@ -321,8 +323,8 @@ export default function Drives() {
                 key={status}
                 onClick={() => setFilter(status)}
                 className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${filter === status
-                    ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-md"
-                    : "bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600"
+                  ? "bg-slate-900 text-white shadow-md glow-sm"
+                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                   }`}
               >
                 {status}
@@ -367,40 +369,40 @@ export default function Drives() {
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ delay: index * 0.05 }}
                       whileHover={{ y: -5 }}
-                      className="group bg-white dark:bg-slate-800 p-6 rounded-[2rem] shadow-sm hover:shadow-xl border border-slate-100 dark:border-slate-700/50 transition-all duration-300 flex flex-col justify-between"
+                      className="group bg-white p-6 rounded-[2rem] shadow-sm hover:shadow-xl border border-slate-100 transition-all duration-300 flex flex-col justify-between"
                     >
                       <div>
                         {/* CARD HEADER */}
                         <div className="flex justify-between items-start mb-4">
-                          <div className="w-12 h-12 bg-indigo-50 dark:bg-slate-700 rounded-2xl flex items-center justify-center text-indigo-600 dark:text-indigo-400 shadow-inner">
+                          <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 shadow-inner">
                             <Building2 size={24} />
                           </div>
                           <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${status === "Expired"
-                              ? "bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400"
-                              : "bg-green-50 text-green-600 dark:bg-green-900/20 dark:text-green-400"
+                            ? "bg-red-50 text-red-600"
+                            : "bg-green-50 text-green-600"
                             }`}>
                             {status}
                           </span>
                         </div>
 
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1 group-hover:text-indigo-600 transition-colors">
+                        <h3 className="text-xl font-bold text-slate-900 mb-1 group-hover:text-indigo-600 transition-colors">
                           {drive.jobRole}
                         </h3>
-                        <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-6">
+                        <p className="text-sm font-medium text-slate-500 mb-6">
                           {drive.company?.name}
                         </p>
 
                         {/* META INFO */}
                         <div className="space-y-3 mb-6">
-                          <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
+                          <div className="flex items-center gap-3 text-sm text-slate-600">
                             <CalendarDays size={16} className="text-slate-400" />
                             <span>Deadline: {new Date(drive.deadline).toLocaleDateString()}</span>
                           </div>
-                          <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
+                          <div className="flex items-center gap-3 text-sm text-slate-600">
                             <Users size={16} className="text-slate-400" />
                             <span>Vacancies: {drive.vacancies}</span>
                           </div>
-                          <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
+                          <div className="flex items-center gap-3 text-sm text-slate-600">
                             <MapPin size={16} className="text-slate-400" />
                             <span>{drive.location}</span>
                           </div>
@@ -408,17 +410,17 @@ export default function Drives() {
                       </div>
 
                       {/* ACTIONS */}
-                      <div className="grid grid-cols-2 gap-3 pt-6 border-t border-slate-100 dark:border-slate-700">
+                      <div className="grid grid-cols-2 gap-3 pt-6 border-t border-slate-100">
                         <button
                           onClick={() => navigate(`/admin/drives/edit/${drive._id}`)}
-                          className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-white py-2.5 rounded-xl text-sm font-semibold transition"
+                          className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-xl text-sm font-semibold transition"
                         >
                           <Edit size={16} /> Edit
                         </button>
 
                         <button
                           onClick={() => deleteDrive(drive._id)}
-                          className="flex items-center justify-center gap-2 bg-red-50 hover:bg-red-100 dark:bg-red-900/20 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 py-2.5 rounded-xl text-sm font-semibold transition"
+                          className="flex items-center justify-center gap-2 bg-red-50 hover:bg-red-100 text-red-600 py-2.5 rounded-xl text-sm font-semibold transition"
                         >
                           <Trash size={16} /> Delete
                         </button>
@@ -437,10 +439,10 @@ export default function Drives() {
 
 function StatCard({ title, value, icon, color }) {
   return (
-    <div className="bg-white dark:bg-slate-800 p-5 rounded-[1.5rem] shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-between">
+    <div className="bg-white p-5 rounded-[1.5rem] shadow-sm border border-slate-100 flex items-center justify-between">
       <div>
-        <p className="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">{title}</p>
-        <p className="text-3xl font-bold text-slate-900 dark:text-white">{value}</p>
+        <p className="text-slate-500 text-sm font-medium mb-1">{title}</p>
+        <p className="text-3xl font-bold text-slate-900">{value}</p>
       </div>
       <div className={`p-3 rounded-2xl ${color}`}>
         {icon}

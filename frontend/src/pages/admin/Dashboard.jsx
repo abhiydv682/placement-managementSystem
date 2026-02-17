@@ -1,179 +1,187 @@
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import { 
-//   Users, 
-//   Building2, 
-//   Briefcase, 
-//   FileCheck, 
-//   TrendingUp,
-//   AlertCircle 
-// } from 'lucide-react';
-// import { toast } from 'react-toastify';
-
-// const Dashboard = () => {
-//   const [stats, setStats] = useState({
-//     totalStudents: 0,
-//     totalCompanies: 0,
-//     totalDrives: 0,
-//     totalApplications: 0,
-//     statusBreakup: []
-//   });
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     const fetchStats = async () => {
-//       try {
-//         const token = localStorage.getItem('token');
-//         // Admin stats API call
-//         const res = await axios.get('http://localhost:5000/api/admin/stats', {
-//           headers: { Authorization: `Bearer ${token}` }
-//         });
-//         setStats(res.data);
-//       } catch (err) {
-//         toast.error("Dashboard stats load karne mein dikkat aayi");
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-//     fetchStats();
-//   }, []);
-
-//   if (loading) {
-//     return (
-//       <div className="flex justify-center items-center h-64">
-//         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-800"></div>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className="space-y-8">
-//       {/* Header Section */}
-//       <div>
-//         <h1 className="text-2xl font-bold text-gray-900">Placement Overview</h1>
-//         <p className="text-gray-500 text-sm mt-1">Welcome to Avani Enterprises Super Admin Panel</p>
-//       </div>
-
-//       {/* Stats Grid */}
-//       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-//         <StatCard 
-//           title="Total Students" 
-//           value={stats.totalStudents} 
-//           icon={<Users className="text-blue-600" />} 
-//           bg="bg-blue-50"
-//         />
-//         <StatCard 
-//           title="Total Companies" 
-//           value={stats.totalCompanies} 
-//           icon={<Building2 className="text-green-600" />} 
-//           bg="bg-green-50"
-//         />
-//         <StatCard 
-//           title="Active Drives" 
-//           value={stats.totalDrives} 
-//           icon={<Briefcase className="text-purple-600" />} 
-//           bg="bg-purple-50"
-//         />
-//         <StatCard 
-//           title="Applications" 
-//           value={stats.totalApplications} 
-//           icon={<FileCheck className="text-orange-600" />} 
-//           bg="bg-orange-50"
-//         />
-//       </div>
-
-//       {/* Detailed Status Section */}
-//       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-//         {/* Selection Status List */}
-//         <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-//           <div className="flex justify-between items-center mb-6">
-//             <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-//               <TrendingUp size={20} className="text-blue-600" />
-//               Application Status Breakup
-//             </h2>
-//           </div>
-//           <div className="space-y-4">
-//             {stats.statusBreakup.length > 0 ? (
-//               stats.statusBreakup.map((item, index) => (
-//                 <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
-//                   <span className="font-medium text-gray-700">{item._id || "Pending"}</span>
-//                   <span className="bg-white px-4 py-1 rounded-full text-blue-700 font-bold border border-blue-100 shadow-sm">
-//                     {item.count}
-//                   </span>
-//                 </div>
-//               ))
-//             ) : (
-//               <div className="text-center py-10 text-gray-400">
-//                 <AlertCircle className="mx-auto mb-2" />
-//                 <p>No application data available yet.</p>
-//               </div>
-//             )}
-//           </div>
-//         </div>
-
-//         {/* Quick Actions */}
-//         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-//           <h2 className="text-lg font-bold text-gray-800 mb-6">Quick Actions</h2>
-//           <div className="space-y-3">
-//             <ActionButton label="Create New Job Drive" color="bg-blue-600" />
-//             <ActionButton label="Register New Company" color="bg-gray-800" />
-//             <ActionButton label="Generate Placement Report" color="bg-green-600" />
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// // Reusable Stat Card
-// const StatCard = ({ title, value, icon, bg }) => (
-//   <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
-//     <div>
-//       <p className="text-sm font-medium text-gray-500">{title}</p>
-//       <p className="text-3xl font-extrabold text-gray-900 mt-1">{value}</p>
-//     </div>
-//     <div className={`w-14 h-14 ${bg} rounded-2xl flex items-center justify-center`}>
-//       {icon}
-//     </div>
-//   </div>
-// );
-
-// // Reusable Action Button
-// const ActionButton = ({ label, color }) => (
-//   <button className={`w-full py-3 px-4 ${color} text-white rounded-xl font-medium text-sm hover:opacity-90 transition-all shadow-sm`}>
-//     {label}
-//   </button>
-// );
-
-// export default Dashboard;
-
-
-
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import AdminStats from "../../components/dashboard/AdminStats";
-import { useEffect, useState } from "react";
 import axiosInstance from "../../services/axiosInstance";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { Calendar, Filter, Download, Briefcase, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
-  const [stats, setStats] = useState({});
+  const [stats, setStats] = useState({
+    totalStudents: 0,
+    totalCompanies: 0,
+    totalDrives: 0,
+    totalApplications: 0,
+    selectedCount: 0,
+    rejectedCount: 0,
+    recentDrives: []
+  });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchStats = async () => {
-      const { data } = await axiosInstance.get("/admin/dashboard");
-      setStats(data);
+      try {
+        const { data } = await axiosInstance.get("/admin/dashboard");
+        setStats(data);
+      } catch (error) {
+        console.error("Failed to fetch dashboard stats", error);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchStats();
   }, []);
 
+  // Prepare Chart Data
+  const chartData = [
+    { name: 'Applications', count: stats.totalApplications || 0, fill: '#8a6144' }, // Bronze
+    { name: 'Selected', count: stats.selectedCount || 0, fill: '#10b981' }, // Emerald
+    { name: 'Rejected', count: stats.rejectedCount || 0, fill: '#ef4444' }, // Red
+  ];
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center h-[80vh]">
+          <div className="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
+        </div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <AdminStats title="Total Students" value={stats.totalStudents} />
-        <AdminStats title="Total Companies" value={stats.totalCompanies} />
-        <AdminStats title="Total Drives" value={stats.totalDrives} />
-        <AdminStats title="Total Applications" value={stats.totalApplications} />
-        <AdminStats title="Selected" value={stats.selectedCount} />
-        <AdminStats title="Rejected" value={stats.rejectedCount} />
+      <div className="space-y-8 max-w-[1600px] mx-auto">
+
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800">Admin Overview</h1>
+            <p className="text-slate-700">Welcome back, here's what's happening at Avani Enterprise today.</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-medium hover:bg-slate-50 transition-colors">
+              <Calendar size={16} /> Last 30 Days
+            </button>
+            <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-medium hover:bg-indigo-700 transition-shadow shadow-md shadow-indigo-600/20">
+              <Download size={16} /> Export Report
+            </button>
+          </div>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+          <AdminStats title="Total Students" value={stats.totalStudents} />
+          <AdminStats title="Total Companies" value={stats.totalCompanies} />
+          <AdminStats title="Total Drives" value={stats.totalDrives} />
+          <AdminStats title="Total Applications" value={stats.totalApplications} />
+          <AdminStats title="Selected" value={stats.selectedCount} />
+          <AdminStats title="Rejected" value={stats.rejectedCount} />
+        </div>
+
+        {/* Charts and Activity Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+          {/* Left: Analytics Chart */}
+          <div className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-bold text-slate-800">Recruitment Funnel</h2>
+              <button className="p-2 hover:bg-slate-50 rounded-lg transition-colors">
+                <Filter size={18} className="text-slate-400" />
+              </button>
+            </div>
+            <div className="h-[300px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b' }} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b' }} />
+                  <Tooltip
+                    cursor={{ fill: '#f8fafc' }}
+                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                  />
+                  <Bar dataKey="count" radius={[8, 8, 0, 0]} barSize={60} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Right: Recent Drives (Activity) */}
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col h-full">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-bold text-slate-800">Recent Drives</h2>
+              <Link to="/admin/drives" className="text-sm font-medium text-indigo-600 hover:text-indigo-700 hover:underline">
+                View All
+              </Link>
+            </div>
+
+            <div className="flex-1 space-y-4 overflow-y-auto pr-2 custom-scrollbar" style={{ maxHeight: '300px' }}>
+              {stats.recentDrives?.map((drive) => (
+                <div key={drive._id} className="group flex items-center justify-between p-3 hover:bg-slate-50 rounded-xl transition-all border border-transparent hover:border-slate-100 cursor-pointer">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-md group-hover:shadow-lg transition-shadow">
+                      {drive.company?.name?.charAt(0) || "C"}
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-slate-800 text-sm group-hover:text-indigo-700 transition-colors">{drive.company?.name || "Unknown Company"}</h4>
+                      <div className="flex items-center gap-2 mt-1">
+                        <Briefcase size={12} className="text-slate-400" />
+                        <p className="text-xs font-medium text-slate-500">{drive.jobRole}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    {(() => {
+                      const deadlineDate = new Date(drive.deadline);
+                      const today = new Date();
+
+                      // Reset time to midnight for accurate date comparison
+                      deadlineDate.setHours(0, 0, 0, 0);
+                      today.setHours(0, 0, 0, 0);
+
+                      // If deadline is today or in the future -> Live
+                      const isLive = deadlineDate >= today;
+
+                      return (
+                        <>
+                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border ${isLive
+                            ? 'bg-emerald-50 text-emerald-700 border-emerald-100'
+                            : 'bg-slate-50 text-slate-500 border-slate-100'
+                            }`}>
+                            <span className={`w-1.5 h-1.5 rounded-full ${isLive ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'}`}></span>
+                            {isLive ? 'Live' : 'Expired'}
+                          </span>
+                          <p className="text-[10px] text-slate-400 mt-1 font-medium">
+                            {isLive
+                              ? `Ends in ${Math.ceil((new Date(drive.deadline).setHours(23, 59, 59, 999) - new Date()) / (1000 * 60 * 60 * 24))} days`
+                              : `Ended on ${new Date(drive.deadline).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}`}
+                          </p>
+                        </>
+                      );
+                    })()}
+                  </div>
+                </div>
+              ))}
+              {(!stats.recentDrives || stats.recentDrives.length === 0) && (
+                <div className="flex flex-col items-center justify-center py-8 text-center h-full">
+                  <div className="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mb-3">
+                    <Briefcase className="text-slate-300" size={20} />
+                  </div>
+                  <p className="text-sm font-medium text-slate-500">No recent activity</p>
+                </div>
+              )}
+            </div>
+
+            <Link
+              to="/admin/drives"
+              className="w-full mt-4 flex items-center justify-center gap-2 py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-600 font-medium rounded-xl transition-colors text-sm group"
+            >
+              View All Drives
+              <ArrowRight size={16} className="text-slate-400 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
+        </div>
       </div>
     </Layout>
   );
