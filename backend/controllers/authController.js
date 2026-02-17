@@ -379,6 +379,7 @@ exports.updateProfile = asyncHandler(async (req, res) => {
   }
 
   /* --- BASIC & PLACEMENT INFO --- */
+  if (req.body.name) user.name = req.body.name;
   if (phone !== undefined) user.phone = phone;
   if (course !== undefined) user.course = course;
   if (college !== undefined) user.college = college;

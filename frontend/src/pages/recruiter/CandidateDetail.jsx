@@ -68,9 +68,13 @@ export default function CandidateDetail() {
         ? app.student.resume.secure_url
         : `${BASE_URL}${app.student?.resume?.secure_url}`;
 
+    const profilePicUrl = app.student?.profilePic?.secure_url?.startsWith("http")
+        ? app.student.profilePic.secure_url
+        : `${BASE_URL}${app.student?.profilePic?.secure_url}`;
+
     return (
         <Layout>
-            <div className="max-w-[1600px] mx-auto p-4 lg:p-6 h-screen flex flex-col">
+            <div className="max-w-[1600px] mx-auto p-4 lg:p-6 min-h-screen lg:h-screen flex flex-col">
                 {/* Top Action Bar */}
                 <div className="flex justify-between items-center mb-6">
                     <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 font-bold transition-all">
@@ -79,24 +83,24 @@ export default function CandidateDetail() {
                     <div className="flex items-center gap-3">
                         <span className="text-sm font-medium text-slate-500">Current Status:</span>
                         <span className={`px-4 py-1 rounded-full text-xs font-bold uppercase ${app.status === 'Selected' ? 'bg-green-100 text-green-700' :
-                                app.status === 'Rejected' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'
+                            app.status === 'Rejected' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'
                             }`}>
                             {app.status}
                         </span>
                     </div>
                 </div>
 
-                <div className="flex flex-col lg:flex-row gap-6 flex-1 overflow-hidden">
+                <div className="flex flex-col lg:flex-row gap-6 flex-1 lg:overflow-hidden">
                     {/* LEFT: CANDIDATE INFO & ACTION (35%) */}
-                    <div className="w-full lg:w-1/3 space-y-6 overflow-y-auto pr-2 custom-scrollbar">
+                    <div className="w-full lg:w-1/3 space-y-6 lg:overflow-y-auto pr-2 custom-scrollbar">
 
                         {/* Profile Header */}
                         <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 text-center relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-full h-2 bg-indigo-600"></div>
-                            <div className="w-24 h-24 rounded-2xl bg-slate-100 mx-auto mb-4 overflow-hidden border-4 border-slate-50">
+                            <div className="w-32 h-32 rounded-full bg-slate-100 mx-auto mb-4 overflow-hidden border-4 border-slate-50 shadow-inner">
                                 {app.student?.profilePic?.secure_url ? (
-                                    <img src={app.student.profilePic.secure_url} alt="Student" className="w-full h-full object-cover" />
-                                ) : <User className="w-full h-full p-6 text-slate-300" />}
+                                    <img src={profilePicUrl} alt={app.student?.name} className="w-full h-full object-cover" />
+                                ) : <User className="w-full h-full p-8 text-slate-300" />}
                             </div>
                             <h2 className="text-2xl font-black text-slate-800">{app.student?.name}</h2>
                             <p className="text-indigo-600 font-bold text-sm uppercase tracking-wider">{app.student?.branch} | {app.student?.course}</p>
@@ -111,6 +115,21 @@ export default function CandidateDetail() {
                             <div className="grid grid-cols-2 gap-4 pt-2">
                                 <div className="p-3 bg-slate-50 rounded-2xl"><p className="text-[10px] text-slate-400 font-bold uppercase">CGPA</p><p className="font-black text-indigo-600">{app.student?.cgpa || "N/A"}</p></div>
                                 <div className="p-3 bg-slate-50 rounded-2xl"><p className="text-[10px] text-slate-400 font-bold uppercase">Batch</p><p className="font-black text-slate-700">{app.student?.batch || "N/A"}</p></div>
+                            </div>
+                        </div>
+
+                        {/* Skills Section */}
+                        <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+                            <h3 className="font-black text-slate-400 text-xs uppercase mb-4 tracking-widest flex items-center gap-2">
+                                <Code2 size={16} /> Skills & Expertise
+                            </h3>
+                            <div className="flex flex-wrap gap-2">
+                                {app.student?.skills?.map((skill, index) => (
+                                    <span key={index} className="px-3 py-1 bg-slate-100 text-slate-700 rounded-lg text-xs font-bold border border-slate-200">
+                                        {skill}
+                                    </span>
+                                ))}
+                                {!app.student?.skills?.length && <p className="text-slate-400 text-sm font-medium italic">No skills added yet</p>}
                             </div>
                         </div>
 
@@ -153,7 +172,7 @@ export default function CandidateDetail() {
                     </div>
 
                     {/* RIGHT: RESUME PREVIEW (65%) */}
-                    <div className="flex-1 bg-white rounded-3xl shadow-sm border border-slate-100 flex flex-col h-full overflow-hidden">
+                    <div className="flex-1 bg-white rounded-3xl shadow-sm border border-slate-100 flex flex-col h-[600px] lg:h-full overflow-hidden">
                         <div className="p-4 border-b flex justify-between items-center bg-slate-50/50">
                             <h3 className="font-black text-slate-800 flex items-center gap-2">
                                 <FileText className="text-indigo-600" /> RESUME PREVIEW
