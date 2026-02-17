@@ -13,7 +13,9 @@ const {
   getRecruiterStats,
   getRecruiterRanking,
   getDriveAnalytics,
+
   getAllApplications,
+  addExistingRecruiter,
 } = require("../controllers/adminController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -65,6 +67,13 @@ adminRoutes.post(
   protect,
   authorizeRoles("admin"),
   createRecruiter
+);
+
+adminRoutes.post(
+  "/recruiter/link",
+  protect,
+  authorizeRoles("admin"),
+  addExistingRecruiter
 );
 
 /* =========================

@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       toast.error(
         err.response?.data?.message ||
-          "Login failed"
+        "Login failed"
       );
       throw err; // 🔥 allow caller to handle
     }
@@ -61,13 +61,14 @@ export const AuthProvider = ({ children }) => {
   const register = async (
     name,
     email,
-    password
+    password,
+    role = "student"
   ) => {
     try {
       const { data } =
         await axiosInstance.post(
           "/auth/register",
-          { name, email, password }
+          { name, email, password, role }
         );
 
       setUser(data.user);
@@ -77,7 +78,7 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       toast.error(
         err.response?.data?.message ||
-          "Register failed"
+        "Register failed"
       );
       throw err;
     }

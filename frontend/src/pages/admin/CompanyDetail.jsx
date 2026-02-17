@@ -26,6 +26,7 @@ export default function CompanyDetail() {
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
+  const [linkMode, setLinkMode] = useState(false); // Toggle: Create vs Link
 
   const [stats, setStats] = useState({});
   const [newRecruiter, setNewRecruiter] = useState({
@@ -100,6 +101,30 @@ export default function CompanyDetail() {
       fetchCompany();
     } catch (err) {
       toast.error(err.response?.data?.message || "Error adding recruiter");
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
+  /* =========================
+     LINK EXISTING RECRUITER
+  ========================== */
+
+  const linkRecruiter = async (e) => {
+    e.preventDefault();
+    try {
+      setModalLoading(true);
+      await axiosInstance.post("/admin/recruiter/link", {
+        email: newRecruiter.email,
+        companyId: id,
+      });
+
+      toast.success("Recruiter linked 🎉");
+      setShowAddModal(false);
+      setNewRecruiter({ name: "", email: "", password: "" });
+      fetchCompany();
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Error linking recruiter");
     } finally {
       setModalLoading(false);
     }
@@ -286,42 +311,66 @@ export default function CompanyDetail() {
               </h3>
               <p className="text-slate-500 dark:text-slate-400 mb-6">Create a new access account for this company.</p>
 
-              <form onSubmit={addRecruiter} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Full Name</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. John Doe"
-                    value={newRecruiter.name}
-                    onChange={(e) => setNewRecruiter({ ...newRecruiter, name: e.target.value })}
-                    className="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none outline-none focus:ring-2 focus:ring-indigo-500/20 dark:text-white"
-                  />
-                </div>
+              <div className="flex gap-2 mb-6 bg-slate-100 dark:bg-slate-700/50 p-1 rounded-xl">
+                <button
+                  type="button"
+                  onClick={() => setLinkMode(false)}
+                  className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${!linkMode ? 'bg-white dark:bg-slate-600 shadow-sm text-indigo-600 dark:text-white' : 'text-slate-500 dark:text-slate-400'}`}
+                >
+                  Create New
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLinkMode(true)}
+                  className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${linkMode ? 'bg-white dark:bg-slate-600 shadow-sm text-indigo-600 dark:text-white' : 'text-slate-500 dark:text-slate-400'}`}
+                >
+                  Link Existing
+                </button>
+              </div>
+
+              <form onSubmit={linkMode ? linkRecruiter : addRecruiter} className="space-y-4">
+                {/* NAME FIELD (Only for Create New) */}
+                {!linkMode && (
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Full Name</label>
+                    <input
+                      type="text"
+                      required={!linkMode}
+                      placeholder="e.g. John Doe"
+                      value={newRecruiter.name}
+                      onChange={(e) => setNewRecruiter({ ...newRecruiter, name: e.target.value })}
+                      className="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none outline-none focus:ring-2 focus:ring-indigo-500/20 dark:text-white"
+                    />
+                  </div>
+                )}
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Email Address</label>
+                  <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">{linkMode ? "Recruiter Email" : "Email Address"}</label>
                   <input
                     type="email"
                     required
-                    placeholder="john@company.com"
+                    placeholder={linkMode ? "existing.recruiter@example.com" : "john@company.com"}
                     value={newRecruiter.email}
                     onChange={(e) => setNewRecruiter({ ...newRecruiter, email: e.target.value })}
                     className="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none outline-none focus:ring-2 focus:ring-indigo-500/20 dark:text-white"
                   />
+                  {linkMode && <p className="text-xs text-slate-500 mt-1">Enter the email of an already registered recruiter.</p>}
                 </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Password</label>
-                  <input
-                    type="password"
-                    required
-                    placeholder="••••••••"
-                    value={newRecruiter.password}
-                    onChange={(e) => setNewRecruiter({ ...newRecruiter, password: e.target.value })}
-                    className="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none outline-none focus:ring-2 focus:ring-indigo-500/20 dark:text-white"
-                  />
-                </div>
+                {/* PASSWORD FIELD (Only for Create New) */}
+                {!linkMode && (
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Password</label>
+                    <input
+                      type="password"
+                      required={!linkMode}
+                      placeholder="••••••••"
+                      value={newRecruiter.password}
+                      onChange={(e) => setNewRecruiter({ ...newRecruiter, password: e.target.value })}
+                      className="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-700 border-none outline-none focus:ring-2 focus:ring-indigo-500/20 dark:text-white"
+                    />
+                  </div>
+                )}
 
                 <div className="pt-4">
                   <button
@@ -329,7 +378,7 @@ export default function CompanyDetail() {
                     disabled={modalLoading}
                     className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-200 dark:shadow-none hover:shadow-xl hover:scale-[1.01] transition-all flex items-center justify-center gap-2"
                   >
-                    {modalLoading ? "Creating..." : "Add Recruiter"}
+                    {modalLoading ? "Processing..." : linkMode ? "Link Recruiter" : "Create Recruiter"}
                   </button>
                 </div>
               </form>

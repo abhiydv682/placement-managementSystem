@@ -310,7 +310,7 @@ const sendTokenCookie = (res, user) => {
 ========================================== */
 
 exports.register = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body; // Accept role
   if (!name || !email || !password) {
     return res.status(400).json({ success: false, message: "All fields are required" });
   }
@@ -320,7 +320,10 @@ exports.register = asyncHandler(async (req, res) => {
     return res.status(400).json({ success: false, message: "User already exists" });
   }
 
-  const user = await User.create({ name, email, password });
+  // Allow only 'student' or 'recruiter' during public signup to prevent 'admin' creation
+  const assignedRole = (role === "recruiter") ? "recruiter" : "student";
+
+  const user = await User.create({ name, email, password, role: assignedRole });
   sendTokenCookie(res, user);
 
   res.status(201).json({

@@ -101,6 +101,69 @@ exports.createRecruiter = async (req, res) => {
   }
 };
 
+
+/* =========================
+   ADD EXISTING RECRUITER
+========================= */
+
+exports.addExistingRecruiter = async (req, res) => {
+  try {
+    const { email, companyId } = req.body;
+
+    if (!email || !companyId) {
+      return res.status(400).json({
+        message: "Email and Company ID required",
+      });
+    }
+
+    const company = await Company.findById(companyId);
+    if (!company) {
+      return res.status(404).json({
+        message: "Company not found",
+      });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    if (user.role !== "recruiter") {
+      return res.status(400).json({
+        message: "User is not a recruiter",
+      });
+    }
+
+    if (user.company) {
+      return res.status(400).json({
+        message: "Recruiter already assigned to a company",
+      });
+    }
+
+    // Link User to Company
+    user.company = companyId;
+    await user.save();
+
+    // Link Company to User
+    await Company.findByIdAndUpdate(companyId, {
+      $addToSet: { recruiters: user._id },
+    });
+
+    res.json({
+      success: true,
+      message: "Recruiter linked successfully",
+      recruiter: user,
+    });
+  } catch (error) {
+    console.error("LINK RECRUITER ERROR:", error);
+    res.status(500).json({
+      message: "Error linking recruiter",
+    });
+  }
+};
+
 /* =========================
    GET ALL COMPANIES
 ========================= */

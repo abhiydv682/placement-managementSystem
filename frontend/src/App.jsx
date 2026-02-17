@@ -29,6 +29,8 @@ import Applications from "./pages/admin/Applications";
 
 // Recruiter Pages
 import DriveApplicants from "./pages/recruiter/DriveApplicants";
+import MyDrives from "./pages/recruiter/MyDrives";
+import CandidateDetail from "./pages/recruiter/CandidateDetail";
 
 // Common
 import Notifications from "./components/common/Notifications";
@@ -37,6 +39,7 @@ import MyProfile from "./pages/student/MyProfile";
 /* ==========================
    Protected Route
 ========================== */
+
 
 const ProtectedRoute = ({ children, role }) => {
   const { user, loading } = useAuth();
@@ -213,11 +216,31 @@ function AppRoutes() {
         }
       />
 
+      {/* 🔥 List of Drives */}
       <Route
         path="/recruiter/drives"
         element={
           <ProtectedRoute role="recruiter">
+            <MyDrives />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* 🔥 Specific Drive Applicants */}
+      <Route
+        path="/recruiter/drive/:driveId"
+        element={
+          <ProtectedRoute role="recruiter">
             <DriveApplicants />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/recruiter/candidate/:applicationId"
+        element={
+          <ProtectedRoute role="recruiter">
+            <CandidateDetail />
           </ProtectedRoute>
         }
       />

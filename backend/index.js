@@ -47,6 +47,7 @@ app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/drives", require("./routes/driveRoutes"));
 app.use("/api/applications", require("./routes/applicationRoutes"));
 app.use("/api/notifications", require("./routes/notificationRoutes"));
+app.use("/api/recruiter", require("./routes/recruiterRoutes"));
 
 app.use(notFound);
 app.use(errorHandler);
