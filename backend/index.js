@@ -22,7 +22,18 @@ app.use("/api/uploads", express.static("uploads"));
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // change in production
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        "http://localhost:5173",
+        "https://placement-management-system-ten.vercel.app",
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.log("Blocked by CORS:", origin);
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
@@ -39,6 +50,10 @@ app.use(
 
 app.get("/", (req, res) => {
   res.send("Placement Management System API Running");
+});
+
+app.get("/api/version", (req, res) => {
+  res.json({ version: "1.0.1", deployedAt: new Date().toISOString() });
 });
 
 // Routes

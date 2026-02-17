@@ -357,6 +357,7 @@ export default function Login() {
                     placeholder="John Doe"
                     onChange={handleChange}
                     required
+                    autoComplete="name"
                     className="w-full p-4 rounded-2xl bg-black/20 border border-white/10 placeholder-white/40 outline-none focus:ring-2 focus:ring-white/50 transition-all font-medium"
                   />
                 </div>
@@ -370,6 +371,7 @@ export default function Login() {
                   placeholder="name@example.com"
                   onChange={handleChange}
                   required
+                  autoComplete="email"
                   className="w-full p-4 rounded-2xl bg-black/20 border border-white/10 placeholder-white/40 outline-none focus:ring-2 focus:ring-white/50 transition-all font-medium"
                 />
               </div>
@@ -382,6 +384,7 @@ export default function Login() {
                   placeholder="••••••••"
                   onChange={handleChange}
                   required
+                  autoComplete="current-password"
                   className="w-full p-4 rounded-2xl bg-black/20 border border-white/10 placeholder-white/40 outline-none focus:ring-2 focus:ring-white/50 transition-all font-medium"
                 />
               </div>
