@@ -294,13 +294,24 @@ const asyncHandler = require("../utils/asyncHandler");
 /* ==========================================
     COOKIE HELPER
 ========================================== */
+// const sendTokenCookie = (res, user) => {
+//   const token = generateToken(user._id, user.role);
+
+//   res.cookie("token", token, {
+//     httpOnly: true,
+//     secure: process.env.NODE_ENV === "production",
+//     sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+//     maxAge: 7 * 24 * 60 * 60 * 1000,
+//   });
+// };
+
 const sendTokenCookie = (res, user) => {
   const token = generateToken(user._id, user.role);
 
   res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    secure: true,          // FORCE TRUE
+    sameSite: "None",      // FORCE NONE
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 };
@@ -348,12 +359,19 @@ exports.login = asyncHandler(async (req, res) => {
 });
 
 exports.logout = asyncHandler(async (req, res) => {
-  res.cookie("token", "", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-    expires: new Date(0),
-  });
+ res.cookie("token", "", {
+  httpOnly: true,
+  secure: true,
+  sameSite: "None",
+  expires: new Date(0),
+});
+
+  // res.cookie("token", "", {
+  //   httpOnly: true,
+  //   secure: process.env.NODE_ENV === "production",
+  //   sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+  //   expires: new Date(0),
+  // });
   res.json({ success: true, message: "Logged out successfully" });
 });
 
