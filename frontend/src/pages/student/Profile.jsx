@@ -777,6 +777,7 @@ import {
   X,
   Eye,
 } from "lucide-react";
+import Modal from "../../components/common/Modal";
 
 export default function Profile() {
   const [editMode, setEditMode] = useState(false);
@@ -796,6 +797,7 @@ export default function Profile() {
   // Preview States
   const [imagePreview, setImagePreview] = useState(null);
   const [resumeUrl, setResumeUrl] = useState(null);
+  const [showResumePreview, setShowResumePreview] = useState(false);
 
   const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
@@ -888,7 +890,12 @@ export default function Profile() {
       toast.success("Profile Updated 🚀");
 
       // Update local states with new URLs from backend
-      if (data.user.resume?.secure_url) setResumeUrl(data.user.resume.secure_url);
+      if (data.user.resume?.secure_url) {
+        const resUrl = data.user.resume.secure_url.startsWith("http")
+          ? data.user.resume.secure_url
+          : BASE_URL + data.user.resume.secure_url;
+        setResumeUrl(resUrl);
+      }
 
       setEditMode(false);
     } catch (err) {
@@ -900,9 +907,9 @@ export default function Profile() {
 
   return (
     <Layout>
-      <div className="max-w-5xl mx-auto p-8">
+      <div className="max-w-5xl mx-auto p-4 md:p-8">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
           <h2 className="text-3xl font-bold">My Placement Profile</h2>
           <button
             onClick={() => setEditMode(!editMode)}
@@ -914,10 +921,10 @@ export default function Profile() {
 
         {!editMode ? (
           /* ================= VIEW MODE ================= */
-          <div className="bg-white p-10 rounded-3xl shadow-xl space-y-8">
-            <div className="flex flex-col md:flex-row items-center gap-8 border-b pb-8">
-              <div className="w-32 h-32 rounded-3xl overflow-hidden bg-slate-100 shadow-inner">
-                {imagePreview ? <img src={imagePreview} className="w-full h-full object-cover" /> : <User className="w-full h-full p-8 text-slate-300" />}
+          <div className="bg-white p-6 md:p-10 rounded-3xl shadow-xl space-y-8">
+            <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8 border-b pb-8">
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden bg-slate-100 shadow-inner shrink-0">
+                {imagePreview ? <img src={imagePreview} className="w-full h-full object-cover" /> : <User className="w-full h-full p-6 md:p-8 text-slate-300" />}
               </div>
               <div className="text-center md:text-left">
                 <h3 className="text-3xl font-bold text-slate-800">{form.name}</h3>
@@ -930,7 +937,7 @@ export default function Profile() {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-4">
                 <h4 className="font-bold text-slate-400 uppercase text-xs tracking-wider">Contact & Education</h4>
                 <Info icon={Phone} label="Phone" value={form.phone} />
@@ -950,25 +957,85 @@ export default function Profile() {
             </div>
 
             {resumeUrl && (
-              <div className="mt-6 p-6 bg-slate-50 rounded-2xl flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-white rounded-xl shadow-sm text-indigo-600"><FileText /></div>
-                  <div><p className="font-bold text-slate-800">Professional Resume</p><p className="text-xs text-slate-500">PDF Document</p></div>
+              <div className="mt-6 p-6 bg-slate-50 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-4 w-full md:w-auto">
+                  <div className="p-3 bg-white rounded-xl shadow-sm text-indigo-600 shrink-0"><FileText /></div>
+                  <div className="text-left"><p className="font-bold text-slate-800 text-sm md:text-base">Professional Resume</p><p className="text-xs text-slate-500">PDF Document</p></div>
                 </div>
-                <div className="flex gap-3">
-                  <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="flex gap-2 items-center bg-indigo-50 border border-indigo-100 px-6 py-2 rounded-xl font-bold text-indigo-600 hover:bg-indigo-100 transition">
+
+
+                {/* <div className="flex gap-3 w-full md:w-auto justify-center md:justify-end">
+                  <button
+                    type="button"
+                    onClick={() => setShowResumePreview(true)}
+                    className="flex-1 md:flex-none justify-center gap-2 items-center bg-indigo-50 border border-indigo-100 px-4 md:px-6 py-2 rounded-xl font-bold text-indigo-600 hover:bg-indigo-100 transition whitespace-nowrap text-sm md:text-base"
+                  >
                     <Eye size={18} /> Preview
-                  </a>
-                  <a href={resumeUrl} download target="_blank" className="flex gap-2 items-center bg-white border border-slate-200 px-6 py-2 rounded-xl font-bold text-slate-600 hover:bg-slate-50 transition">
+                  </button>
+                  <a href={resumeUrl} download target="_blank" className="flex-1 md:flex-none justify-center gap-2 items-center bg-white border border-slate-200 px-4 md:px-6 py-2 rounded-xl font-bold text-slate-600 hover:bg-slate-50 transition whitespace-nowrap text-sm md:text-base">
                     <Download size={18} /> Download
                   </a>
+                </div> */}
+
+                <div className="flex gap-3 w-full md:w-auto justify-center md:justify-end">
+
+                  {/* Preview Button */}
+                  {/* <button
+                    type="button"
+                    onClick={() => setShowResumePreview(true)}
+                    className="flex flex-1 md:flex-none items-center justify-center gap-2 
+                      bg-indigo-50 border border-indigo-100 
+                      px-4 md:px-6 py-2 rounded-xl 
+                      font-bold text-indigo-600 
+                      hover:bg-indigo-100 transition 
+                      whitespace-nowrap text-sm md:text-base"
+                    >
+                    <Eye size={18} />
+                    Preview
+                  </button> */}
+                   <a
+                    href={resumeUrl}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-1 md:flex-none items-center justify-center gap-2 
+                      bg-white border border-slate-200 
+                      px-4 md:px-6 py-2 rounded-xl 
+                      font-bold text-slate-600 
+                      hover:bg-slate-50 transition 
+                      whitespace-nowrap text-sm md:text-base"
+                  >
+                    <Eye size={18} />
+                    Preview
+                  </a>
+
+                  {/* Download Button */}
+                  <a
+                    href={resumeUrl}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-1 md:flex-none items-center justify-center gap-2 
+                      bg-white border border-slate-200 
+                      px-4 md:px-6 py-2 rounded-xl 
+                      font-bold text-slate-600 
+                      hover:bg-slate-50 transition 
+                      whitespace-nowrap text-sm md:text-base"
+                  >
+                    <Download size={18} />
+                    Download
+                  </a>
+
                 </div>
+
+
+
               </div>
             )}
           </div>
         ) : (
           /* ================= EDIT MODE ================= */
-          <form onSubmit={saveProfile} className="bg-white p-8 rounded-3xl shadow-xl space-y-8">
+          <form onSubmit={saveProfile} className="bg-white p-6 md:p-8 rounded-3xl shadow-xl space-y-6 md:space-y-8">
             {/* Profile Pic Upload */}
             <div className="flex items-center gap-6 p-4 bg-slate-50 rounded-2xl">
               <div className="relative w-24 h-24 rounded-2xl overflow-hidden bg-white shadow-sm">
@@ -983,7 +1050,7 @@ export default function Profile() {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               <Input label="Full Name" name="name" value={form.name} onChange={handleChange} />
               <Input label="Phone" name="phone" value={form.phone} onChange={handleChange} />
               <Input label="Course" name="course" value={form.course} onChange={handleChange} />
@@ -1033,6 +1100,20 @@ export default function Profile() {
             </button>
           </form>
         )}
+        {/* Resume Preview Modal */}
+        <Modal
+          isOpen={showResumePreview}
+          onClose={() => setShowResumePreview(false)}
+          title="Resume Preview"
+        >
+          <div className="w-full h-[75vh]">
+            <iframe
+              src={resumeUrl}
+              className="w-full h-full rounded-lg border border-slate-200"
+              title="Resume Preview"
+            />
+          </div>
+        </Modal>
       </div>
     </Layout>
   );

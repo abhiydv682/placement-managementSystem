@@ -24,10 +24,10 @@
 //   cors({
 //     origin: (origin, callback) => {
 //       const allowedOrigins = [
-//         // "http://localhost:5173",
-//         "https://placement-management-system-ten.vercel.app",
+//         "http://localhost:5173",
+//         // "https://placement-management-system-ten.vercel.app",
 //         // "https://placement-manageme-git-b91d7d-abhishek-kumars-projects-89b125f0.vercel.app",
-        
+
 //       ];
 //       if (!origin || allowedOrigins.includes(origin)) {
 //         callback(null, true);
@@ -112,6 +112,7 @@ const app = express();
 app.use(
   cors({
     origin: "https://placement-management-system-ten.vercel.app",
+    // origin: "http://localhost:5173",
     credentials: true,
   })
 );
@@ -125,7 +126,19 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(helmet());
+app.use(cookieParser());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    crossOriginEmbedderPolicy: false,
+  })
+);
+// Disable X-Frame-Options to allow iframe display
+app.use((req, res, next) => {
+  res.removeHeader("X-Frame-Options");
+  next();
+});
+
 app.use(morgan("dev"));
 
 app.use(
