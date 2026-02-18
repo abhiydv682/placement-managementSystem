@@ -24,7 +24,7 @@ app.use(
   cors({
     origin: (origin, callback) => {
       const allowedOrigins = [
-        "http://localhost:5173",
+        // "http://localhost:5173",
         "https://placement-management-system-ten.vercel.app",
       ];
       if (!origin || allowedOrigins.includes(origin)) {
