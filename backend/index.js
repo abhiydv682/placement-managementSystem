@@ -25,7 +25,8 @@ app.use(
     origin: (origin, callback) => {
       const allowedOrigins = [
         // "http://localhost:5173",
-        "https://placement-management-system-ten.vercel.app",
+        // "https://placement-management-system-ten.vercel.app",
+        "https://placement-manageme-git-b91d7d-abhishek-kumars-projects-89b125f0.vercel.app",
       ];
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
