@@ -76,14 +76,14 @@ export default function Landing() {
                         {user ? (
                             <Link
                                 to={`/${user.role}`}
-                                className="bg-slate-900 text-white px-8 py-3 rounded-2xl font-black hover:bg-indigo-600 transition-all hover:shadow-2xl hover:shadow-indigo-200 flex items-center gap-2 active:scale-95 text-sm md:text-base"
+                                className="bg-slate-900 text-white px-6 py-2.5 rounded-2xl font-black hover:bg-indigo-600 transition-all hover:shadow-2xl hover:shadow-indigo-200 flex items-center gap-2 active:scale-95 text-sm md:text-base"
                             >
                                 Dashboard <ArrowRight size={18} />
                             </Link>
                         ) : (
                             <>
                                 <Link to="/login" className="text-slate-500 font-black hover:text-indigo-600 transition-colors text-sm md:text-base hidden sm:block">Log In</Link>
-                                <Link to="/register" className="bg-indigo-600 text-white px-8 py-3 rounded-2xl font-black hover:bg-slate-900 transition-all shadow-2xl shadow-indigo-100 flex items-center gap-2 active:scale-95 text-sm md:text-base">
+                                <Link to="/register" className="bg-indigo-600 text-white px-6 py-2.5 rounded-2xl font-black hover:bg-slate-900 transition-all shadow-2xl shadow-indigo-100 flex items-center gap-2 active:scale-95 text-sm md:text-base">
                                     Get Started
                                 </Link>
                             </>
@@ -131,21 +131,21 @@ export default function Landing() {
                         <motion.h1
                             variants={itemVariants}
                             style={{ y: yHero }}
-                            className="text-6xl md:text-8xl lg:text-9xl font-black text-slate-900 mb-8 tracking-[-0.04em] leading-[0.9] md:leading-[1]"
+                            className="text-5xl md:text-7xl lg:text-8xl font-black text-slate-900 mb-8 tracking-[-0.04em] leading-[0.9] md:leading-[1]"
                         >
                             Future-Proof <br />
                             <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-400 bg-clip-text text-transparent">Your Career.</span>
                         </motion.h1>
 
-                        <motion.p variants={itemVariants} className="max-w-3xl mx-auto text-lg md:text-xl lg:text-2xl text-slate-500 font-medium leading-relaxed mb-16">
+                        <motion.p variants={itemVariants} className="max-w-3xl mx-auto text-base md:text-lg lg:text-xl text-slate-500 font-medium leading-relaxed mb-16">
                             AVANI is the all-in-one placement engine for ambitious students and top recruiters. Where massive opportunities meet exceptional talent.
                         </motion.p>
 
                         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                            <Link to="/register" className="w-full sm:w-auto px-12 py-6 bg-indigo-600 text-white rounded-[2rem] font-black text-xl hover:bg-slate-900 hover:scale-105 transition-all shadow-3xl shadow-indigo-100 flex items-center justify-center gap-3">
-                                Start Your Journey <ArrowRight size={24} />
+                            <Link to="/register" className="w-full sm:w-auto px-10 py-4 bg-indigo-600 text-white rounded-[2rem] font-black text-lg hover:bg-slate-900 hover:scale-105 transition-all shadow-3xl shadow-indigo-100 flex items-center justify-center gap-3">
+                                Start Your Journey <ArrowRight size={22} />
                             </Link>
-                            <Link to="/about" className="w-full sm:w-auto px-12 py-6 bg-white text-slate-900 border-4 border-slate-50 rounded-[2rem] font-black text-xl hover:bg-slate-50 hover:border-slate-100 transition-all shadow-sm">
+                            <Link to="/about" className="w-full sm:w-auto px-10 py-4 bg-white text-slate-900 border-4 border-slate-50 rounded-[2rem] font-black text-lg hover:bg-slate-50 hover:border-slate-100 transition-all shadow-sm">
                                 View Platform
                             </Link>
                         </motion.div>
@@ -188,7 +188,7 @@ export default function Landing() {
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="text-4xl md:text-6xl font-black text-slate-900 tracking-tight"
+                            className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight"
                         >
                             Your Path to <span className="text-indigo-600">Placement</span>.
                         </motion.h2>
@@ -226,9 +226,9 @@ export default function Landing() {
                     <div className="flex flex-col md:flex-row items-end justify-between mb-24 gap-10">
                         <div className="max-w-2xl">
                             <span className="text-indigo-600 font-black uppercase tracking-[0.2em] text-xs mb-4 block">Unrivaled Power</span>
-                            <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">Built for the <br /> modern career.</h2>
+                            <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tighter">Built for the <br /> modern career.</h2>
                         </div>
-                        <p className="text-slate-500 font-bold text-xl max-w-sm border-l-4 border-indigo-600 pl-6 py-2">We've automated the chaos. Focus on what matters: Your interview.</p>
+                        <p className="text-slate-500 font-bold text-lg max-w-sm border-l-4 border-indigo-600 pl-6 py-2">We've automated the chaos. Focus on what matters: Your interview.</p>
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-8 md:gap-12">
@@ -274,10 +274,10 @@ export default function Landing() {
                         initial={{ opacity: 0, y: 40 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-5xl md:text-[7rem] font-black text-slate-900 mb-10 tracking-[-0.05em] leading-[0.85]">Ready to <span className="text-indigo-600">WIN?</span></h2>
-                        <p className="text-slate-500 text-2xl md:text-3xl mb-16 font-medium max-w-2xl mx-auto leading-tight">Join the next generation of professionals.</p>
-                        <Link to="/register" className="inline-flex items-center gap-4 bg-indigo-600 text-white px-16 py-8 rounded-[3rem] font-black text-2xl hover:bg-slate-900 transition-all shadow-4xl shadow-indigo-100 group">
-                            Register Now <ArrowRight size={32} className="group-hover:translate-x-2 transition-transform" />
+                        <h2 className="text-4xl md:text-6xl lg:text-[6rem] font-black text-slate-900 mb-10 tracking-[-0.05em] leading-[0.85]">Ready to <span className="text-indigo-600">WIN?</span></h2>
+                        <p className="text-slate-500 text-lg md:text-xl lg:text-2xl mb-16 font-medium max-w-xl mx-auto leading-tight">Join the next generation of professionals.</p>
+                        <Link to="/register" className="inline-flex items-center gap-4 bg-indigo-600 text-white px-12 py-5 rounded-[3rem] font-black text-xl hover:bg-slate-900 transition-all shadow-4xl shadow-indigo-100 group">
+                            Register Now <ArrowRight size={28} className="group-hover:translate-x-2 transition-transform" />
                         </Link>
                     </motion.div>
                 </div>
