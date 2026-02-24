@@ -98,12 +98,12 @@ export default function MyApplications() {
 
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto space-y-8 pb-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 pb-20">
 
         {/* HEADER SECTION */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-2xl md:text-3xl font-extrabold text-slate-800 tracking-tight">
               My Applications
             </h1>
             <p className="text-slate-500 mt-2">
@@ -172,7 +172,7 @@ export default function MyApplications() {
                     className="group bg-white p-6 rounded-[2rem] shadow-sm hover:shadow-xl border border-slate-100 transition-all duration-300"
                   >
                     {/* HEADER */}
-                    <div className="flex justify-between items-start mb-6">
+                    <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6">
                       <div className="flex gap-4 items-center">
                         <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 shadow-inner font-bold text-xl border border-indigo-100">
                           {app.company?.name?.charAt(0) || "C"}
@@ -190,7 +190,7 @@ export default function MyApplications() {
                     </div>
 
                     {/* DETAILS GRID */}
-                    <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                       <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
                           <CalendarDays size={12} /> Applied On

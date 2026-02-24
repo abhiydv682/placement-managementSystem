@@ -158,26 +158,26 @@ export default function CompanyDetail() {
 
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto space-y-8 pb-20">
+      <div className="max-w-7xl mx-auto space-y-8 px-4 sm:px-6 lg:px-8 py-8 pb-20">
 
         {/* HEADER */}
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
           <div className="space-y-4">
             <button
               onClick={() => navigate("/admin/companies")}
-              className="flex items-center gap-2 text-slate-500 hover:text-indigo-600 transition-colors"
+              className="flex items-center gap-2 text-slate-500 hover:text-indigo-600 transition-colors text-sm sm:text-base"
             >
-              <ArrowLeft size={20} />
+              <ArrowLeft size={18} />
               <span>Back to Companies</span>
             </button>
 
             <div className="flex items-start gap-4">
-              <div className="p-4 bg-white rounded-2xl shadow-sm border border-slate-100">
-                <Building2 size={32} className="text-indigo-600" />
+              <div className="p-3 sm:p-4 bg-white rounded-2xl shadow-sm border border-slate-100 flex-shrink-0">
+                <Building2 size={28} className="text-indigo-600 sm:w-8 sm:h-8" />
               </div>
-              <div>
-                <h1 className="text-3xl font-bold text-slate-900">{company.name}</h1>
-                <p className="text-slate-500 max-w-2xl mt-1">
+              <div className="min-w-0">
+                <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 truncate">{company.name}</h1>
+                <p className="text-slate-500 max-w-2xl mt-1 text-sm sm:text-base line-clamp-2 md:line-clamp-none">
                   {company.description || "No description provided for this company."}
                 </p>
               </div>
@@ -186,7 +186,7 @@ export default function CompanyDetail() {
 
           <button
             onClick={() => setShowAddModal(true)}
-            className="flex items-center gap-2 bg-indigo-600 text-white px-5 py-3 rounded-xl shadow-lg shadow-indigo-200 dark:shadow-none hover:bg-indigo-700 hover:scale-105 transition-all font-semibold"
+            className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-5 py-3 rounded-xl shadow-lg shadow-indigo-200 dark:shadow-none hover:bg-indigo-700 hover:scale-[1.02] active:scale-95 transition-all font-semibold w-full md:w-auto mt-2 md:mt-0"
           >
             <UserPlus size={20} />
             Add Recruiter
@@ -206,7 +206,7 @@ export default function CompanyDetail() {
               <p className="text-slate-500">No recruiters added yet.</p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {company.recruiters.map((rec) => {
                 const recStats = stats[rec._id];
 

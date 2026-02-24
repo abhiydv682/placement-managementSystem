@@ -134,7 +134,7 @@ export default function Drives() {
       <div className="max-w-7xl mx-auto p-4 md:p-6 pb-20">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8 gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900">
+            <h2 className="text-2xl font-bold text-slate-800">
               🚀 Available Drives
             </h2>
             <p className="text-slate-500 text-sm mt-1">Explore and apply to new opportunities</p>

@@ -49,7 +49,7 @@ export default function Analytics() {
 
     return (
         <Layout>
-            <div className="space-y-6 md:space-y-8 max-w-[1600px] mx-auto p-4 md:p-6">
+            <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-20 space-y-8">
 
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -57,8 +57,8 @@ export default function Analytics() {
                         <h1 className="text-xl md:text-2xl font-bold text-slate-800">Recruitment Analytics</h1>
                         <p className="text-sm md:text-base text-slate-500">Deep dive into recruiter performance and drive efficiency.</p>
                     </div>
-                    <button className="flex items-center justify-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-medium hover:bg-slate-50 transition-colors w-full md:w-auto shadow-sm">
-                        <Download size={16} /> Export Data
+                    <button className="flex items-center justify-center gap-2 px-6 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold hover:bg-slate-50 transition-all w-full md:w-auto shadow-sm active:scale-95">
+                        <Download size={18} /> Export Data
                     </button>
                 </div>
 
@@ -83,15 +83,10 @@ export default function Analytics() {
                                     <YAxis
                                         dataKey="name"
                                         type="category"
-                                        width={80}
+                                        width={window.innerWidth < 640 ? 60 : 100}
                                         axisLine={false}
                                         tickLine={false}
-                                        tick={{ fill: '#64748b', fontSize: 11 }}
-                                        style={{
-                                            textOverflow: 'ellipsis',
-                                            whiteSpace: 'nowrap',
-                                            overflow: 'hidden'
-                                        }}
+                                        tick={{ fill: '#64748b', fontSize: 10 }}
                                     />
                                     <Tooltip
                                         cursor={{ fill: '#f8fafc' }}
@@ -124,10 +119,10 @@ export default function Analytics() {
                                         axisLine={false}
                                         tickLine={false}
                                         tick={{ fill: '#64748b', fontSize: 10 }}
-                                        interval={0}
-                                        angle={-10}
+                                        interval={window.innerWidth < 640 ? 1 : 0}
+                                        angle={-20}
                                         textAnchor="end"
-                                        height={40}
+                                        height={60}
                                     />
                                     <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
                                     <Tooltip cursor={{ fill: '#f8fafc' }} contentStyle={{ borderRadius: '12px' }} />

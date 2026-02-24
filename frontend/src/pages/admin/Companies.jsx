@@ -184,7 +184,7 @@ export default function Companies() {
 
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl mx-auto space-y-8 px-4 sm:px-6 lg:px-8 py-8">
 
         {/* HEADER */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -192,14 +192,14 @@ export default function Companies() {
             <h1 className="md:text-3xl text-2xl font-extrabold text-slate-900 dark:text-gray-800 tracking-tight">
               Company Management
             </h1>
-            <p className="text-slate-700 dark:text-slate-500 mt-2">
+            <p className="text-slate-700 dark:text-slate-500 mt-2 text-sm sm:base">
               Manage partnering companies and their recruiters
             </p>
           </div>
 
           <button
             onClick={openCreate}
-            className="flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-2xl shadow-lg shadow-indigo-200 dark:shadow-none hover:bg-indigo-700 hover:scale-105 transition-all font-semibold"
+            className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-2xl shadow-lg shadow-indigo-200 dark:shadow-none hover:bg-indigo-700 hover:scale-[1.02] active:scale-95 transition-all font-semibold w-full md:w-auto"
           >
             <Plus size={20} />
             Add Company
@@ -219,7 +219,7 @@ export default function Companies() {
             placeholder="Search companies or recruiters..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white shadow-sm outline-none text-slate-700 transition-all focus:ring-2 focus:ring-indigo-500/20"
+            className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white shadow-sm outline-none text-slate-700 transition-all focus:ring-2 focus:ring-indigo-500/20 text-sm sm:text-base"
           />
         </div>
 
@@ -248,17 +248,17 @@ export default function Companies() {
                     onClick={() => navigate(`/admin/company/${company._id}`)}
                     className="group bg-white p-6 rounded-[2rem] shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer relative overflow-hidden"
                   >
-                    <div className="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute top-0 right-0 p-6 md:opacity-0 group-hover:opacity-100 transition-opacity">
                       <div className="flex gap-2">
                         <button
                           onClick={(e) => openEdit(company, e)}
-                          className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-600 hover:text-indigo-600 transition"
+                          className="p-2 bg-slate-100/80 backdrop-blur-sm hover:bg-slate-200 rounded-full text-slate-600 hover:text-indigo-600 transition shadow-sm"
                         >
                           <Edit size={16} />
                         </button>
                         <button
                           onClick={(e) => deleteCompany(company._id, e)}
-                          className="p-2 bg-red-50 hover:bg-red-100 rounded-full text-red-600 hover:text-red-700 transition"
+                          className="p-2 bg-red-50/80 backdrop-blur-sm hover:bg-red-100 rounded-full text-red-600 hover:text-red-700 transition shadow-sm"
                         >
                           <Trash size={16} />
                         </button>

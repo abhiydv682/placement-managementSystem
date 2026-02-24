@@ -108,19 +108,19 @@ export default function Applications() {
 
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto space-y-8 pb-20">
+      <div className="max-w-7xl mx-auto space-y-8 px-4 sm:px-6 lg:px-8 py-8 pb-20">
         {/* HEADER */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
+            <h1 className="text-3xl font-bold text-slate-800 tracking-tight">
               Applications
             </h1>
-            <p className="text-slate-500 mt-2">Manage student applications and status</p>
+            <p className="text-slate-600 mt-2">Manage student applications and status</p>
           </div>
         </div>
 
         {/* KPI CARDS */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <StatCard label="Total" value={counts.total} icon={<FileText size={20} />} color="bg-blue-50 text-blue-600" />
           <StatCard label="Shortlisted" value={counts.shortlisted} icon={<Clock size={20} />} color="bg-amber-50 text-amber-600" />
           <StatCard label="Selected" value={counts.selected} icon={<CheckCircle size={20} />} color="bg-emerald-50 text-emerald-600" />
@@ -135,7 +135,7 @@ export default function Applications() {
               placeholder="Search student, role, company..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 border-none outline-none focus:ring-2 focus:ring-indigo-500/20 text-slate-700 transition-all"
+              className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 border-none outline-none focus:ring-2 focus:ring-indigo-500/20 text-slate-800 transition-all text-sm sm:text-base"
             />
           </div>
 
@@ -161,7 +161,7 @@ export default function Applications() {
             <div className="animate-spin h-12 w-12 border-4 border-indigo-600 border-t-transparent rounded-full"></div>
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
               {filteredApps.length === 0 ? (
                 <motion.div
@@ -190,17 +190,17 @@ export default function Applications() {
                     <div>
                       <div className="flex justify-between items-start mb-4">
                         <div>
-                          <h3 className="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
+                          <h3 className="text-lg font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">
                             {app.student?.name}
                           </h3>
-                          <p className="text-sm font-medium text-slate-500">
+                          <p className="text-sm font-medium text-slate-600">
                             {app.drive?.jobRole}
                           </p>
                         </div>
                         <StatusBadge status={app.status} />
                       </div>
 
-                      <div className="text-sm text-slate-400 mb-6 flex items-center gap-2">
+                      <div className="text-sm text-slate-500 mb-6 flex items-center gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
                         {app.company?.name}
                       </div>
@@ -212,7 +212,7 @@ export default function Applications() {
                         <select
                           value={app.status}
                           onChange={(e) => updateStatus(app._id, e.target.value)}
-                          className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 outline-none transition-all cursor-pointer hover:bg-slate-100"
+                          className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 outline-none transition-all cursor-pointer hover:bg-slate-100"
                         >
                           <option value="Applied">Applied</option>
                           <option value="Shortlisted">Shortlisted</option>
@@ -232,7 +232,7 @@ export default function Applications() {
                         }
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 w-full py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-sm font-bold transition-colors"
+                        className="flex items-center justify-center gap-2 w-full py-3 bg-indigo-100 hover:bg-indigo-100 text-indigo-700 rounded-xl text-sm font-bold transition-colors"
                       >
                         <FileText size={16} />
                         View Resume
@@ -257,8 +257,8 @@ function StatCard({ label, value, icon, color }) {
   return (
     <div className="bg-white p-5 rounded-[1.5rem] shadow-sm border border-slate-100 flex items-center justify-between">
       <div>
-        <p className="text-slate-500 text-sm font-medium mb-1">{label}</p>
-        <p className="text-2xl font-bold text-slate-900">{value}</p>
+        <p className="text-slate-600 text-sm font-medium mb-1">{label}</p>
+        <p className="text-2xl font-bold text-slate-800">{value}</p>
       </div>
       <div className={`p-3 rounded-2xl ${color} bg-opacity-10`}>
         {icon}

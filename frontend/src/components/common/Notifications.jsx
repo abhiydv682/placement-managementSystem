@@ -60,10 +60,10 @@ export default function Notifications() {
 
   return (
     <Layout>
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 pb-20">
 
         {/* HEADER */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8">
           <div className="flex items-center gap-3">
             <div className="bg-white dark:bg-slate-800 p-3 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
               <Bell size={24} className="text-indigo-600 dark:text-indigo-400" />
@@ -109,8 +109,8 @@ export default function Notifications() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, height: 0 }}
                   className={`group relative p-5 rounded-2xl border transition-all duration-300 ${n.isRead
-                      ? "bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700"
-                      : "bg-indigo-50/50 dark:bg-indigo-900/10 border-indigo-100 dark:border-indigo-900/30 shadow-sm"
+                    ? "bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 shadow-sm"
+                    : "bg-white dark:bg-slate-800 border-indigo-200 dark:border-indigo-500/30 shadow-md shadow-indigo-100/50 dark:shadow-none"
                     }`}
                 >
                   <div className="flex gap-4">
@@ -135,7 +135,7 @@ export default function Notifications() {
                         {!n.isRead && (
                           <button
                             onClick={() => markRead(n._id)}
-                            className="flex items-center gap-1 text-xs font-semibold text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 transition-colors opacity-0 group-hover:opacity-100"
+                            className="flex items-center gap-1 text-xs font-semibold text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 transition-colors sm:opacity-0 sm:group-hover:opacity-100 opacity-100"
                           >
                             <Check size={12} />
                             Mark read

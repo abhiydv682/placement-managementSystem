@@ -276,7 +276,7 @@ export default function Drives() {
 
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl mx-auto space-y-8 px-4 sm:px-6 lg:px-8 py-8">
 
         {/* HEADER */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -284,14 +284,14 @@ export default function Drives() {
             <h1 className="md:text-3xl text-2xl font-extrabold text-slate-900 dark:text-gray-800 tracking-tight">
               Drive Management
             </h1>
-            <p className="text-slate-500 dark:text-slate-400 mt-2">
+            <p className="text-slate-500 dark:text-slate-400 mt-1 sm:mt-2 text-sm sm:base">
               Create and manage placement drives for students
             </p>
           </div>
 
           <button
             onClick={() => navigate("/admin/drives/create")}
-            className="flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-2xl shadow-lg shadow-indigo-200 dark:shadow-none hover:bg-indigo-700 hover:scale-105 transition-all font-semibold"
+            className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-2xl shadow-lg shadow-indigo-200 dark:shadow-none hover:bg-indigo-700 hover:scale-[1.02] active:scale-95 transition-all font-semibold w-full md:w-auto"
           >
             <Plus size={20} />
             Create Drive
@@ -306,23 +306,23 @@ export default function Drives() {
         </div>
 
         {/* CONTROLS */}
-        <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 mb-6 flex flex-col md:flex-row gap-4">
+        <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 mb-6 flex flex-col lg:flex-row gap-4">
           <div className="relative flex-1">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
             <input
               placeholder="Search by role or company..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 border-none outline-none focus:ring-2 focus:ring-indigo-500/20 text-slate-700 transition-all"
+              className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 border-none outline-none focus:ring-2 focus:ring-indigo-500/20 text-slate-700 transition-all text-sm sm:text-base"
             />
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {["All", "Active", "Expired"].map((status) => (
               <button
                 key={status}
                 onClick={() => setFilter(status)}
-                className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${filter === status
+                className={`flex-1 sm:flex-none px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ${filter === status
                   ? "bg-slate-900 text-white shadow-md glow-sm"
                   : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                   }`}

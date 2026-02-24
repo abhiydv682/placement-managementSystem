@@ -53,12 +53,14 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto space-y-8 p-4 md:p-6 pb-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 pb-24 space-y-8">
 
         {/* HEADER */}
-        <div>
-          <h1 className="text-3xl font-bold text-slate-900">Recruiter Dashboard</h1>
-          <p className="text-slate-500 mt-1">Manage your hiring drives and applicants</p>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">Recruiter Dashboard</h1>
+            <p className="text-slate-500 mt-1 text-sm md:text-base">Manage your hiring drives and applicants</p>
+          </div>
         </div>
 
         {/* STATS CARDS */}
@@ -147,9 +149,9 @@ export default function Dashboard() {
               <Link to="/recruiter/drives" className="text-sm font-bold text-indigo-600 hover:text-indigo-700">View All Drives</Link>
             </div>
 
-            <div className="bg-white rounded-[2.5rem] p-6 shadow-sm border border-slate-100 overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
+            <div className="bg-white rounded-[2rem] md:rounded-[2.5rem] p-4 md:p-6 shadow-sm border border-slate-100 overflow-hidden">
+              <div className="overflow-x-auto scrollbar-hide">
+                <table className="w-full text-left border-collapse min-w-[800px]">
                   <thead>
                     <tr className="border-b border-slate-100">
                       <th className="p-4 text-xs font-bold text-slate-400 uppercase tracking-wider pl-6">Candidate</th>

@@ -51,7 +51,7 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <div className="space-y-8 max-w-[1600px] mx-auto">
+      <div className="space-y-8 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -59,11 +59,11 @@ export default function Dashboard() {
             <h1 className="text-2xl font-bold text-slate-800">Admin Overview</h1>
             <p className="text-slate-700">Welcome back, here's what's happening at Avani Enterprise today.</p>
           </div>
-          <div className="flex items-center gap-3">
-            <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-medium hover:bg-slate-50 transition-colors">
+          <div className="flex flex-wrap items-center gap-3">
+            <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs sm:text-sm font-medium hover:bg-slate-50 transition-colors whitespace-nowrap">
               <Calendar size={16} /> Last 30 Days
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-medium hover:bg-indigo-700 transition-shadow shadow-md shadow-indigo-600/20">
+            <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs sm:text-sm font-medium hover:bg-indigo-700 transition-shadow shadow-md shadow-indigo-600/20 whitespace-nowrap">
               <Download size={16} /> Export Report
             </button>
           </div>
